@@ -3,6 +3,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'fesser lippen chip chalkwithering licktackle fef foundation'
+
     @staticmethod
     def init_app(app):
         pass
