@@ -32,6 +32,7 @@ def before_request():
     if not g.current_user.confirmed:
         return forbidden('Unconfirmed account')
 
+
 @api.route('/token')
 def get_token():
     if g.token_used:
