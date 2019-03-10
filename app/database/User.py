@@ -13,7 +13,7 @@ class User(db.Model):
     confirmed = db.Column(db.Boolean, default=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128))
-    dukkhas = db.relationship('Dukkha', backref='dukkha')
+    dukkhas = db.relationship('Dukkha', backref='user')
 
     def __repr__(self):
         return '<User %r>' % self.username
