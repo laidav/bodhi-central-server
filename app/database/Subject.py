@@ -8,6 +8,7 @@ class Subject(db.Model):
     name = db.Column(db.String(64), unique=True)
 
     parent = db.relationship('Subject', backref='children', remote_side=[id])
+    teachings = db.relationship('Teaching', backref='subject')
 
     def __repr__(self):
         return '<Subject %r>' % self.name
