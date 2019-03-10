@@ -17,5 +17,21 @@ db.init_app(app)
 
 if __name__ == "__main__":
     with app.app_context():
-        user = User.query.first()
-        print(user.username)
+        admin_role = Role(name="Administrator")
+        mod_role = Role(name="Moderator")
+        user_role = Role(name="User")
+        user_david = User(username="Dave", role=admin_role, confirmed=True)
+        dukkha = Dukkha(title="First Dukkha!", description="Dukkha description!", author=user_david)
+        wisdom = Subject(name="Wisdom")
+        ethics = Subject(name="Ethics")
+        meditation = Subject(name="Meditation")
+        right_view = Subject(name="Right View", parent=wisdom)
+        right_intention = Subject(name="Right Intention", parent=wisdom)
+        teaching = Teaching(title="First Teaching", notes="First notes in teaching!", subject=right_view, dukkha=dukkha)
+
+        db.session.add_all([admin_role, mod_role, user_role, user_david, dukkha, wisdom,
+                            ethics, meditation, right_view, right_intention, teaching])
+
+        db.session.commit()
+
+        print("Seed data initialized!")
