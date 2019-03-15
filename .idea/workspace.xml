@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="92d9faeb-1a88-4343-b17e-31a03631c5ca" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/app/api_1_0/dukkhas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/database/Dukkha.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database/Dukkha.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/database/Subject.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database/Subject.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/database/Teaching.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database/Practice.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/database/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api_1_0/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api_1_0/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/2019-03-10-12:22_18d3f41b79c0_add_teachings_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/versions/2019-03-10-12:22_18d3f41b79c0_add_practices_table.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/2019-03-10-12:40_1d61ae9f043d_added_created_date_to_teaching.py" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/versions/2019-03-10-12:40_1d61ae9f043d_added_created_date_to_practice.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,11 +43,61 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Practice.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Practice.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/database/Practice.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+            <state relative-caret-position="75">
+              <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="users.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/api_1_0/users.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="20" lean-forward="true" selection-end-line="7" />
+              <folding>
+                <element signature="e#0#17#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dukkhas.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/api_1_0/dukkhas.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="43" lean-forward="true" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
+              <folding>
+                <element signature="e#0#17#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2019-03-03_initial_seed_data.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="22" column="85" selection-start-line="22" selection-start-column="85" selection-end-line="22" selection-end-column="85" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="authentication.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/api_1_0/authentication.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/api_1_0/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="46" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -95,7 +140,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/app/api_1_0/__init__.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/change_scripts/__init__.py" />
         <option value="$PROJECT_DIR$/app/__init__.py" />
@@ -107,7 +151,9 @@
         <option value="$PROJECT_DIR$/app/database/Subject.py" />
         <option value="$PROJECT_DIR$/migrations/versions/2019-03-10-12:40_1d61ae9f043d_added_created_date_to_practice.py" />
         <option value="$PROJECT_DIR$/migrations/versions/2019-03-10-12:22_18d3f41b79c0_add_practices_table.py" />
+        <option value="$PROJECT_DIR$/app/api_1_0/dukkhas.py" />
         <option value="$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py" />
+        <option value="$PROJECT_DIR$/app/api_1_0/__init__.py" />
       </list>
     </option>
   </component>
@@ -220,13 +266,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/database/Dukkha.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/migrations/versions/2019-03-09-17:31_a27a08b01201_add_dukkha_table.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -368,9 +407,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/database/User.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/migrations/versions/2019-03-03-10:48_b4ab4b5ec33d_added_email_and_confirmed_status_to_.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -383,19 +419,6 @@
     <entry file="file://$PROJECT_DIR$/change_scripts/__init__.py" />
     <entry file="file://$PROJECT_DIR$/change_scripts/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/api_1_0/users.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/api_1_0/authentication.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/api_1_0/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="37" lean-forward="true" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/migrations/versions/2019-03-02-16:53_ccd27fb04412_initial_migration.py">
       <provider selected="true" editor-type-id="text-editor" />
@@ -444,16 +467,6 @@
     <entry file="file://$PROJECT_DIR$/app/database/Role.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="23" column="51" selection-start-line="23" selection-start-column="51" selection-end-line="23" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/migrations/versions/2019-03-10-09:22_d22c9cbef954_added_subject_model.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -483,8 +496,51 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/database/Practice.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+        <state relative-caret-position="75">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/api_1_0/users.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="20" lean-forward="true" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/api_1_0/dukkhas.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="43" lean-forward="true" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/database/User.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="85" selection-start-line="22" selection-start-column="85" selection-end-line="22" selection-end-column="85" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/api_1_0/authentication.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/api_1_0/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="46" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
         </state>
       </provider>
     </entry>

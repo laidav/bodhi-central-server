@@ -20,7 +20,8 @@ if __name__ == "__main__":
         admin_role = Role(name="Administrator")
         mod_role = Role(name="Moderator")
         user_role = Role(name="User")
-        user_david = User(username="Dave", role=admin_role, confirmed=True)
+        user_david = User(username="Dave", role=admin_role, email="laidav@gmail.com", confirmed=True)
+        user_david.password = "Password1!"
         dukkha = Dukkha(title="First Dukkha!", description="Dukkha description!", author=user_david)
         wisdom = Subject(name="Wisdom")
         ethics = Subject(name="Ethics")
