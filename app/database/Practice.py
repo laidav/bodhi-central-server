@@ -2,8 +2,8 @@ from .. import db
 from datetime import datetime
 
 
-class Teaching(db.Model):
-    __tablename__ = "teachings"
+class Practice(db.Model):
+    __tablename__ = "practices"
     id = db.Column(db.Integer, primary_key=True)
     subject_id = db.Column(db.Integer, db.ForeignKey("subjects.id"))
     dukkha_id = db.Column(db.Integer, db.ForeignKey("dukkhas.id"))
@@ -12,4 +12,4 @@ class Teaching(db.Model):
     created_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
-        return "<Teaching %r>" % self.title
+        return "<Practice %r>" % self.title

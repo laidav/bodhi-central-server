@@ -10,7 +10,7 @@ class Dukkha(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     created_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
-    teachings = db.relationship("Teaching", backref="dukkha")
+    practices = db.relationship("Practice", backref="dukkha")
 
     def __repr__(self):
         return "<Dukkha %r>" % self.title

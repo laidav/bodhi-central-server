@@ -5,7 +5,7 @@ sys.path.append('..')
 
 from config import config
 from flask import Flask
-from app.database import User, Role, Dukkha, Subject, Teaching
+from app.database import User, Role, Dukkha, Subject, Practice
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -27,10 +27,10 @@ if __name__ == "__main__":
         meditation = Subject(name="Meditation")
         right_view = Subject(name="Right View", parent=wisdom)
         right_intention = Subject(name="Right Intention", parent=wisdom)
-        teaching = Teaching(title="First Teaching", notes="First notes in teaching!", subject=right_view, dukkha=dukkha)
+        practice = Practice(title="First Practice", notes="First notes in practice!", subject=right_view, dukkha=dukkha)
 
         db.session.add_all([admin_role, mod_role, user_role, user_david, dukkha, wisdom,
-                            ethics, meditation, right_view, right_intention, teaching])
+                            ethics, meditation, right_view, right_intention, practice])
 
         db.session.commit()
 
