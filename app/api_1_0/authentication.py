@@ -37,5 +37,5 @@ def before_request():
 def get_token():
     if g.token_used:
         return unauthorized("Invalid credentials")
-    return jsonify({"token": g.current_user.generate_auth_token(expiration=3600), "expiration": 3600})
+    return jsonify({"token": g.current_user.generate_auth_token(expiration=604800), "expiration": 604800})
 
