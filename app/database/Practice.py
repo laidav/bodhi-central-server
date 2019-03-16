@@ -13,3 +13,13 @@ class Practice(db.Model):
 
     def __repr__(self):
         return "<Practice %r>" % self.title
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "subject": self.subject.to_json(),
+            "dukkha": self.dukkha.to_json(),
+            "title": self.title,
+            "notes": self.notes,
+            "created_date": self.created_date
+        }

@@ -12,5 +12,14 @@ class Dukkha(db.Model):
 
     practices = db.relationship("Practice", backref="dukkha")
 
+    def to_json(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "author": self.author.to_json(),
+            "created_date": self.created_date
+        }
+
     def __repr__(self):
         return "<Dukkha %r>" % self.title

@@ -12,3 +12,10 @@ class Subject(db.Model):
 
     def __repr__(self):
         return "<Subject %r>" % self.name
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "parent_id": self.parent_id,
+            "name": self.name
+        }

@@ -41,3 +41,12 @@ class User(db.Model):
         except ValidationError:
             return None
         return User.query.get(data["id"])
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "confirmed": self.confirmed,
+            "role_id": self.role_id
+        }

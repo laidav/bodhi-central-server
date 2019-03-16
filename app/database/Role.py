@@ -10,3 +10,9 @@ class Role(db.Model):
 
     def __repr__(self):
         return "<Role %r>" % self.name
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "name": self.name
+        }
