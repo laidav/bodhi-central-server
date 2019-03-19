@@ -39,3 +39,8 @@ def get_token():
         return unauthorized("Invalid credentials")
     return jsonify({"token": g.current_user.generate_auth_token(expiration=604800), "expiration": 604800})
 
+
+@api.route("/verify-token")
+def verify_token():
+    return jsonify({"error": 200})
+
