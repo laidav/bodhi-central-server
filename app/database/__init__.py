@@ -1,5 +1,7 @@
 from .User import User
 from .Role import Role
-from .Dukkha import Dukkha
+from .Post import Post
 from .Subject import Subject
-from .Practice import Practice
+from .Post import PostSubject
+
+

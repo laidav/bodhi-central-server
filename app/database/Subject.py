@@ -1,4 +1,5 @@
 from .. import db
+from .PostSubject import PostSubject
 
 
 class Subject(db.Model):
@@ -8,7 +9,11 @@ class Subject(db.Model):
     name = db.Column(db.String(64), unique=True)
 
     parent = db.relationship("Subject", backref="children", remote_side=[id])
-    practices = db.relationship("Practice", backref="subject")
+    posts = db.relationship("PostSubject",
+                            foreign_keys=[PostSubject.post_id, PostSubject.subject_id],
+                            backref=db.backref("post", lazy="joined"),
+                            lazy="dynamic",
+                            cascade="all, delete-orphan")
 
     def __repr__(self):
         return "<Subject %r>" % self.name

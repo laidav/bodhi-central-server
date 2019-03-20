@@ -5,7 +5,7 @@ sys.path.append('..')
 
 from config import config
 from flask import Flask
-from app.database import User, Role, Dukkha, Subject, Practice
+from app.database import User, Role, Post, Subject, PostSubject
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -20,18 +20,30 @@ if __name__ == "__main__":
         admin_role = Role(name="Administrator")
         mod_role = Role(name="Moderator")
         user_role = Role(name="User")
-        user_david = User(username="Dave", role=admin_role, email="laidav@gmail.com", confirmed=True)
+        user_david = User(username="Dave",
+                          role=admin_role,
+                          email="laidav@gmail.com",
+                          confirmed=True)
         user_david.password = "Password1!"
-        dukkha = Dukkha(title="First Dukkha!", description="Dukkha description!", author=user_david)
         wisdom = Subject(name="Wisdom")
         ethics = Subject(name="Ethics")
         meditation = Subject(name="Meditation")
         right_view = Subject(name="Right View", parent=wisdom)
         right_intention = Subject(name="Right Intention", parent=wisdom)
-        practice = Practice(title="First Practice", notes="First notes in practice!", subject=right_view, dukkha=dukkha)
+        post = Post(title="First Post",
+                    description="First Post Description!",
+                    link="www.somearticle.com",
+                    author=user_david)
 
-        db.session.add_all([admin_role, mod_role, user_role, user_david, dukkha, wisdom,
-                            ethics, meditation, right_view, right_intention, practice])
+        db.session.add_all([admin_role, mod_role, user_role, user_david, wisdom,
+                            ethics, meditation, right_view, right_intention, post])
+
+        db.session.commit()
+
+        post_subject_a = PostSubject(post_id=post.id, subject_id=right_view.id)
+        post_subject_b = PostSubject(post_id=post.id, subject_id=right_intention.id)
+
+        db.session.add_all([post_subject_a, post_subject_b])
 
         db.session.commit()
 
