@@ -35,15 +35,12 @@ if __name__ == "__main__":
                     link="www.somearticle.com",
                     author=user_david)
 
+        post_subject_a = PostSubject(post=post, subject=right_view)
+        post_subject_b = PostSubject(post=post, subject=right_intention)
+
         db.session.add_all([admin_role, mod_role, user_role, user_david, wisdom,
-                            ethics, meditation, right_view, right_intention, post])
-
-        db.session.commit()
-
-        post_subject_a = PostSubject(post_id=post.id, subject_id=right_view.id)
-        post_subject_b = PostSubject(post_id=post.id, subject_id=right_intention.id)
-
-        db.session.add_all([post_subject_a, post_subject_b])
+                            ethics, meditation, right_view, right_intention, post,
+                            post_subject_a, post_subject_b])
 
         db.session.commit()
 
