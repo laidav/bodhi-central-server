@@ -2,25 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="92d9faeb-1a88-4343-b17e-31a03631c5ca" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/database/Post.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/database/PostSubject.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api_1_0/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api_1_0/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api_1_0/dukkhas.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api_1_0/dukkhas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/database/Dukkha.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/database/Practice.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/database/Post.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database/Post.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/database/Subject.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database/Subject.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/database/User.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database/User.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/database/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/database/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/2019-03-02-16:53_ccd27fb04412_initial_migration.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/2019-03-03-09:25_0de368e0f393_added_password_hash_to_user_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/2019-03-03-10:48_b4ab4b5ec33d_added_email_and_confirmed_status_to_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/2019-03-09-17:31_a27a08b01201_add_dukkha_table.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/2019-03-10-09:22_d22c9cbef954_added_subject_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/2019-03-10-12:22_18d3f41b79c0_add_practices_table.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/2019-03-10-12:40_1d61ae9f043d_added_created_date_to_practice.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,8 +19,8 @@
       <file leaf-file-name="Subject.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/database/Subject.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+            <state relative-caret-position="195">
+              <caret line="13" column="55" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="55" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -43,18 +28,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="2019-03-20-19:12_cbe61d3c7c5b_first_migration_script.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/migrations/versions/2019-03-20-19:12_cbe61d3c7c5b_first_migration_script.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-570" />
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="2019-03-03_initial_seed_data.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="35" column="38" lean-forward="true" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+            <state relative-caret-position="465">
+              <caret line="41" column="40" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -80,8 +58,8 @@
       <file leaf-file-name="Post.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/database/Post.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="88" selection-start-line="16" selection-start-column="88" selection-end-line="16" selection-end-column="88" />
+            <state relative-caret-position="255">
+              <caret line="17" column="55" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -140,9 +118,9 @@
         <option value="$PROJECT_DIR$/app/database/User.py" />
         <option value="$PROJECT_DIR$/app/api_1_0/dukkhas.py" />
         <option value="$PROJECT_DIR$/app/database/__init__.py" />
+        <option value="$PROJECT_DIR$/app/database/PostSubject.py" />
         <option value="$PROJECT_DIR$/app/database/Post.py" />
         <option value="$PROJECT_DIR$/app/database/Subject.py" />
-        <option value="$PROJECT_DIR$/app/database/PostSubject.py" />
         <option value="$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py" />
       </list>
     </option>
@@ -409,18 +387,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/database/Post.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="88" selection-start-line="16" selection-start-column="88" selection-end-line="16" selection-end-column="88" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/database/Subject.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+        <state relative-caret-position="255">
+          <caret line="17" column="55" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>
@@ -428,14 +396,22 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/migrations/versions/2019-03-20-19:12_cbe61d3c7c5b_first_migration_script.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/database/Subject.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-570" />
+        <state relative-caret-position="195">
+          <caret line="13" column="55" selection-start-line="13" selection-start-column="55" selection-end-line="13" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/change_scripts/2019-03-03_initial_seed_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="35" column="38" lean-forward="true" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+        <state relative-caret-position="465">
+          <caret line="41" column="40" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
         </state>
       </provider>
     </entry>

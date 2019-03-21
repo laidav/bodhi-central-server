@@ -11,7 +11,7 @@ class Subject(db.Model):
     parent = db.relationship("Subject", backref="children", remote_side=[id])
     posts = db.relationship("PostSubject",
                             foreign_keys=[PostSubject.post_id, PostSubject.subject_id],
-                            backref=db.backref("post", lazy="joined"),
+                            backref=db.backref("subject", lazy="joined"),
                             lazy="dynamic",
                             cascade="all, delete-orphan")
 

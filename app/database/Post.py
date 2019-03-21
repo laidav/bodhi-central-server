@@ -15,7 +15,7 @@ class Post(db.Model):
 
     subjects = db.relationship("PostSubject",
                                foreign_keys=[PostSubject.subject_id, PostSubject.post_id],
-                               backref=db.backref("subject", lazy="joined"),
+                               backref=db.backref("post", lazy="joined"),
                                lazy="dynamic",
                                cascade="all, delete-orphan")
 
