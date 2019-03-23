@@ -14,13 +14,11 @@ class Post(db.Model):
     created = db.Column(db.DateTime(), default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    subjects = db.relationship("PostSubject",
-                               foreign_keys=[PostSubject.subject_id, PostSubject.post_id],
-                               backref=db.backref("post", lazy="joined"),
-                               lazy="dynamic",
-                               cascade="all, delete-orphan")
-
-    subject_ids = association_proxy("postsubject", "subject_id")
+    post_subjects = db.relationship("PostSubject",
+                                    foreign_keys=[PostSubject.subject_id, PostSubject.post_id],
+                                    backref=db.backref("post", lazy="joined"),
+                                    lazy="dynamic",
+                                    cascade="all, delete-orphan")
 
     practices = db.relationship("Practice", backref="post")
 
@@ -34,5 +32,6 @@ class Post(db.Model):
             "description": self.description,
             "link": self.link,
             "created": self.created,
-            "subjects": self.subject_ids
+            "subjects": [post_subject.subject.to_json() for post_subject in self.post_subjects],
+            "author": self.author.to_json()
         }

@@ -9,11 +9,11 @@ class Subject(db.Model):
     name = db.Column(db.String(64), unique=True)
 
     parent = db.relationship("Subject", backref="children", remote_side=[id])
-    posts = db.relationship("PostSubject",
-                            foreign_keys=[PostSubject.post_id, PostSubject.subject_id],
-                            backref=db.backref("subject", lazy="joined"),
-                            lazy="dynamic",
-                            cascade="all, delete-orphan")
+    post_subjects = db.relationship("PostSubject",
+                                    foreign_keys=[PostSubject.post_id, PostSubject.subject_id],
+                                    backref=db.backref("subject", lazy="joined"),
+                                    lazy="dynamic",
+                                    cascade="all, delete-orphan")
 
     def __repr__(self):
         return "<Subject %r>" % self.name
