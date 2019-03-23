@@ -1,6 +1,7 @@
 from .. import db
 from datetime import datetime
 from .PostSubject import PostSubject
+from sqlalchemy.ext.associationproxy import association_proxy
 
 
 class Post(db.Model):
@@ -19,6 +20,10 @@ class Post(db.Model):
                                lazy="dynamic",
                                cascade="all, delete-orphan")
 
+    subject_ids = association_proxy("postsubject", "subject_id")
+
+    practices = db.relationship("Practice", backref="post")
+
     def __repr__(self):
         return "<Post %r>" % self.title
 
@@ -26,5 +31,8 @@ class Post(db.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "description": self.description
+            "description": self.description,
+            "link": self.link,
+            "created": self.created,
+            "subjects": self.subject_ids
         }

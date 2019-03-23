@@ -5,7 +5,7 @@ sys.path.append('..')
 
 from config import config
 from flask import Flask
-from app.database import User, Role, Post, Subject, PostSubject
+from app.database import User, Role, Post, Subject, PostSubject, Practice
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -30,17 +30,26 @@ if __name__ == "__main__":
         meditation = Subject(name="Meditation")
         right_view = Subject(name="Right View", parent=wisdom)
         right_intention = Subject(name="Right Intention", parent=wisdom)
-        post = Post(title="First Post",
-                    description="First Post Description!",
-                    link="www.somearticle.com",
+        post = Post(title="Ajahn Chah: The Peace Beyond",
+                    description="Ajahn Chah gives talk on the birth and death of suffering",
+                    link="https://www.youtube.com/watch?v=Mtqz82w4v0s",
                     author=user_david)
 
         post_subject_a = PostSubject(post=post, subject=right_view)
         post_subject_b = PostSubject(post=post, subject=right_intention)
 
+        practice = Practice(teaching_point="Happiness and Unhappiness are "
+                                           "equal in disturbing peace and enlightment."
+                                           "Meditation helps us not cling on to these things",
+                            application="Rifle Shooting - Clinging on to a good shot or bad shot"
+                                        "distracts you out of the moment, preventing you from doing what you"
+                                        "need to do.",
+                            author=user_david,
+                            post=post)
+
         db.session.add_all([admin_role, mod_role, user_role, user_david, wisdom,
                             ethics, meditation, right_view, right_intention, post,
-                            post_subject_a, post_subject_b])
+                            post_subject_a, post_subject_b, practice])
 
         db.session.commit()
 

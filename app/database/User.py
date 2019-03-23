@@ -15,6 +15,7 @@ class User(db.Model):
     password_hash = db.Column(db.String(128))
 
     posts = db.relationship("Post", backref="author")
+    practices = db.relationship("Practice", backref="author")
 
     def __repr__(self):
         return "<User %r>" % self.username
