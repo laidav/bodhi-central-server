@@ -1,5 +1,5 @@
 from . import api
-from ..database import Post, Practice
+from ..database import Post
 from flask import g, jsonify
 
 
@@ -16,13 +16,5 @@ def get_posts():
 @api.route("/post/<int:post_id>")
 def get_post(post_id):
     post = Post.query.get_or_404(post_id).to_json()
-
-    practices = Practice.query.filter_by(post_id=post_id, author=g.current_user)
-
-    practices_json = {
-        "practices": [practice.to_json() for practice in practices]
-    }
-
-    post.update(practices_json)
 
     return jsonify(post)
