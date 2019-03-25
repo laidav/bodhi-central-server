@@ -22,6 +22,6 @@ class Practice(db.Model):
             "application": self.application,
             "created": self.created,
             "author_id": self.author_id,
-            "post_id": self.post_id,
-            "post_title": self.post.title
+            "post_title": self.post.title,
+            "post": self.post.to_json()
         }
