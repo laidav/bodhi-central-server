@@ -47,9 +47,18 @@ if __name__ == "__main__":
                             author=user_david,
                             post=post)
 
+        practice_2 = Practice(teaching_point="We hold and let go, but we do not cling.  We hold "
+                                             "onto things all the time, but we don't cling.",
+                              application="While meditating during breath, I tried holding on"
+                                          "in breath and letting go on out breath.  I am not 'clinging"
+                                          "on' to 'letting go'.  The breath is so beautiful, maybe life is"
+                                          "all about holding and letting go, just like the breath",
+                              author=user_david,
+                              post=post)
+
         db.session.add_all([admin_role, mod_role, user_role, user_david, wisdom,
                             ethics, meditation, right_view, right_intention, post,
-                            post_subject_a, post_subject_b, practice])
+                            post_subject_a, post_subject_b, practice, practice_2])
 
         db.session.commit()
 
