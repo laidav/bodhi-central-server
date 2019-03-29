@@ -5,8 +5,8 @@ from .PostSubject import PostSubject
 class Subject(db.Model):
     __tablename__ = "subjects"
     id = db.Column(db.Integer, primary_key=True)
-    first_child_id = db.Column(db.Integer, db.ForeignKey("subjects.id"))
-    right_sibling_id = db.Column(db.Integer, db.ForeignKey("subjects.id"))
+    first_child_id = db.Column(db.Integer, db.ForeignKey("subjects.id"), unique=True)
+    right_sibling_id = db.Column(db.Integer, db.ForeignKey("subjects.id"), unique=True)
     name = db.Column(db.String(64), unique=True)
 
     first_child = db.relationship("Subject", backref="parent",
