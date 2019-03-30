@@ -5,8 +5,9 @@ sys.path.append('..')
 
 from config import config
 from flask import Flask
-from app.database import User, Role, Post, Subject, PostSubject, Practice
+from app.database import User, Role, Post, Subject, PostSubject, Practice, PracticeSubject
 from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
 app.config.from_object(config[os.getenv("FLASK_CONFIG") or "default"])
@@ -90,12 +91,19 @@ if __name__ == "__main__":
                                           "all about holding and letting go, just like the breath",
                               author=user_david,
                               post=post_2)
+        
+        practice_subject_a = PracticeSubject(practice=practice, subject=right_view)
+        practice_subject_b = PracticeSubject(practice=practice, subject=meditation)
+
+        practice_2_subject_a = PracticeSubject(practice=practice_2, subject=right_view)
+        practice_2_subject_b = PracticeSubject(practice=practice_2, subject=meditation)
 
         db.session.add_all([admin_role, mod_role, user_role, user_david, buddha, wisdom,
                             ethics, meditation, right_view, right_intention, right_speech,
                             right_action, right_livelihood, right_effort, right_mindfulness,
                             right_concentration, post, post_2, post_subject_a, post_subject_b, practice,
-                            practice_2])
+                            practice_2, practice_subject_a, practice_subject_b, practice_2_subject_a,
+                            practice_2_subject_b])
 
         db.session.commit()
 

@@ -1,5 +1,6 @@
 from .. import db
 from datetime import datetime
+from .PracticeSubject import PracticeSubject
 
 
 class Practice(db.Model):
@@ -12,6 +13,12 @@ class Practice(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))
 
+    subjects = db.relationship("PracticeSubject",
+                               foreign_keys=[PracticeSubject.subject_id, PracticeSubject.practice_id],
+                               backref=db.backref("practice", lazy="joined"),
+                               lazy="dynamic",
+                               cascade="all, delete-orphan")
+
     def __repr__(self):
         return "<Practice %r>" % self.teaching_point
 
@@ -23,5 +30,6 @@ class Practice(db.Model):
             "created": self.created,
             "author_id": self.author_id,
             "post_title": self.post.title,
+            "subjects": [subject.subject.to_json() for subject in self.subjects],
             "post": self.post.to_json()
         }

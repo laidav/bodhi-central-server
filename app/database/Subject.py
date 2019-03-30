@@ -1,5 +1,6 @@
 from .. import db
 from .PostSubject import PostSubject
+from .PracticeSubject import PracticeSubject
 
 
 class Subject(db.Model):
@@ -23,6 +24,12 @@ class Subject(db.Model):
                                     backref=db.backref("subject", lazy="joined"),
                                     lazy="dynamic",
                                     cascade="all, delete-orphan")
+
+    practice_subjects = db.relationship("PracticeSubject",
+                                        foreign_keys=[PracticeSubject.practice_id, PracticeSubject.subject_id],
+                                        backref=db.backref("subject", lazy="joined"),
+                                        lazy="dynamic",
+                                        cascade="all, delete-orphan")
 
     def __repr__(self):
         return "<Subject %r>" % self.name

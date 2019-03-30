@@ -2,7 +2,7 @@ from .. import db
 
 
 class PostSubject(db.Model):
-    __tablename__ = "postsubject"
+    __tablename__ = "post_subject"
 
     post_id = db.Column(db.Integer, db.ForeignKey("posts.id"), primary_key=True)
     subject_id = db.Column(db.Integer, db.ForeignKey("subjects.id"), primary_key=True)
