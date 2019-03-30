@@ -30,14 +30,12 @@ class Practice(db.Model):
             "application": self.application,
             "created": self.created,
             "author_id": self.author_id,
-            "post_title": self.post.title,
             "subjects": [subject.subject.to_json() for subject in self.subjects],
-            "post": self.post.to_json()
+            "post": self.post.to_json() if self.post is not None else None
         }
 
     @staticmethod
     def from_json(json_post):
-        print(json_post)
         teaching_point = json_post.get("teaching_point")
         application = json_post.get("application")
         if teaching_point is None or teaching_point == "":
