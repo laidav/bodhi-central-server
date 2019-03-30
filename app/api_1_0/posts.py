@@ -1,6 +1,6 @@
 from . import api
 from ..database import Post
-from flask import g, jsonify
+from flask import jsonify
 
 
 @api.route("/post")

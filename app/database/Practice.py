@@ -1,6 +1,7 @@
 from .. import db
 from datetime import datetime
 from .PracticeSubject import PracticeSubject
+from ..exceptions import ValidationError
 
 
 class Practice(db.Model):
@@ -33,3 +34,15 @@ class Practice(db.Model):
             "subjects": [subject.subject.to_json() for subject in self.subjects],
             "post": self.post.to_json()
         }
+
+    @staticmethod
+    def from_json(json_post):
+        print(json_post)
+        teaching_point = json_post.get("teaching_point")
+        application = json_post.get("application")
+        if teaching_point is None or teaching_point == "":
+            raise ValidationError("post does not have a body")
+
+        return Practice(teaching_point=teaching_point, application=application)
+
+

@@ -3,7 +3,7 @@ from flask import request
 from ..modules import BLPractice
 
 
-@api.route("/practice")
+@api.route("/practice", methods=["GET"])
 def get_practices():
 
     post_id = request.args.get("post_id")
@@ -11,4 +11,13 @@ def get_practices():
     practices = BLPractice.get_practices(post_id)
 
     return practices
+
+
+@api.route("/practice", methods=["POST"])
+def add_practice():
+    new_practice = BLPractice.add_practice(request)
+
+    return new_practice
+
+
 
