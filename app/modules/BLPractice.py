@@ -34,8 +34,6 @@ class BLPractice:
             if new_practice.post_id is not None and post is None:
                 raise PostNotFoundError
 
-            new_practice.post = post
-
             new_practice.author = g.current_user
             db.session.add(new_practice)
             db.session.commit()

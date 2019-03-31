@@ -50,5 +50,5 @@ class Practice(db.Model):
         }
 
     @staticmethod
-    def from_json(json_post):
-        return Practice(json_post)
+    def from_json(json_practice):
+        return Practice(json_practice)
