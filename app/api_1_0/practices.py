@@ -1,6 +1,6 @@
 from . import api
 from flask import request
-from ..modules import BLPractice
+from ..modules.BLPractice import BLPractice
 
 
 @api.route("/practice", methods=["GET"])

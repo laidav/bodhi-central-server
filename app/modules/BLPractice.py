@@ -1,9 +1,10 @@
-from ..database import Practice
+from ..database import Practice, Post
 from flask import g, jsonify
 from .. import db
 from .schemas.practice_schema import AddPracticeSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
+from ..exceptions import PostNotFoundError
 
 
 class BLPractice:
@@ -26,6 +27,14 @@ class BLPractice:
             new_practice = request.json
             new_practice = AddPracticeSchema.validate(new_practice)
             new_practice = Practice.from_json(new_practice)
+
+            post = None if new_practice.post_id is None else Post.query.get(new_practice.post_id)
+
+            if new_practice.post_id is not None and post is None:
+                raise PostNotFoundError
+
+            new_practice.post = post
+
             new_practice.author = g.current_user
             db.session.add(new_practice)
             db.session.commit()
@@ -33,6 +42,8 @@ class BLPractice:
             error_code = ErrorCodes.ERROR_SUCCESS
         except SchemaError:
             error_code = ErrorCodes.ERROR_SCHEMA_VALIDATION
+        except PostNotFoundError:
+            error_code = ErrorCodes.POST_NOT_FOUND
 
         if error_code == ErrorCodes.ERROR_SUCCESS:
             return jsonify(new_practice.to_json()), ErrorCodes.HTTP_CREATED

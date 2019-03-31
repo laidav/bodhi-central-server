@@ -1,7 +1,7 @@
 from .. import db
 from datetime import datetime
 from .PracticeSubject import PracticeSubject
-from ..exceptions import ValidationError
+from ..modules.BLDecorators import set_attributes_decorator
 
 
 class Practice(db.Model):
@@ -23,6 +23,10 @@ class Practice(db.Model):
     def __repr__(self):
         return "<Practice %r>" % self.teaching_point
 
+    @set_attributes_decorator
+    def __init__(self, *initial_data, **kwargs):
+        pass
+
     def to_json(self):
         return {
             "id": self.id,
@@ -36,11 +40,4 @@ class Practice(db.Model):
 
     @staticmethod
     def from_json(json_post):
-        teaching_point = json_post.get("teaching_point")
-        application = json_post.get("application")
-        if teaching_point is None or teaching_point == "":
-            raise ValidationError("post does not have a body")
-
-        return Practice(teaching_point=teaching_point, application=application)
-
-
+        return Practice(json_post)
