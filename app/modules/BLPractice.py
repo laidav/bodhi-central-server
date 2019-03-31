@@ -1,6 +1,7 @@
 from ..database import Practice
 from flask import g, jsonify
 from .. import db
+from .schemas.practice_schema import AddPracticeSchema
 
 
 class BLPractice:
@@ -19,7 +20,9 @@ class BLPractice:
 
     @staticmethod
     def add_practice(request):
-        new_practice = Practice.from_json(request.json)
+        new_practice = request.json
+        new_practice = AddPracticeSchema.validate(new_practice)
+        new_practice = Practice.from_json(new_practice)
         new_practice.author = g.current_user
         db.session.add(new_practice)
         db.session.commit()
