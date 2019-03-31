@@ -1,0 +1,13 @@
+class ErrorCodes:
+
+    # HTTP Status Codes
+    HTTP_SUCCESS = 200
+    HTTP_CREATED = 201
+    HTTP_BAD_REQUEST = 400
+
+    ERROR_SUCCESS = 200
+    ERROR_SCHEMA_VALIDATION = 201
+    ERROR_UNKNOWN = 202
+
+    # Custom Errors
+    INVALID_SUBJECT = 400

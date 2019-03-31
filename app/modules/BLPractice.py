@@ -2,6 +2,8 @@ from ..database import Practice
 from flask import g, jsonify
 from .. import db
 from .schemas.practice_schema import AddPracticeSchema
+from .ErrorCodes import ErrorCodes
+from schema import SchemaError
 
 
 class BLPractice:
@@ -20,12 +22,21 @@ class BLPractice:
 
     @staticmethod
     def add_practice(request):
-        new_practice = request.json
-        new_practice = AddPracticeSchema.validate(new_practice)
-        new_practice = Practice.from_json(new_practice)
-        new_practice.author = g.current_user
-        db.session.add(new_practice)
-        db.session.commit()
+        try:
+            new_practice = request.json
+            new_practice = AddPracticeSchema.validate(new_practice)
+            new_practice = Practice.from_json(new_practice)
+            new_practice.author = g.current_user
+            db.session.add(new_practice)
+            db.session.commit()
 
-        return jsonify(new_practice.to_json()), 201
+            error_code = ErrorCodes.ERROR_SUCCESS
+        except SchemaError:
+            error_code = ErrorCodes.ERROR_SCHEMA_VALIDATION
+
+        if error_code == ErrorCodes.ERROR_SUCCESS:
+            return jsonify(new_practice.to_json()), ErrorCodes.HTTP_CREATED
+
+        return jsonify({"error": error_code}), ErrorCodes.HTTP_BAD_REQUEST
+
 
