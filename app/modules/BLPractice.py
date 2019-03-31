@@ -46,7 +46,7 @@ class BLPractice:
             error_code = ErrorCodes.POST_NOT_FOUND
 
         if error_code == ErrorCodes.ERROR_SUCCESS:
-            return jsonify(new_practice.to_json()), ErrorCodes.HTTP_CREATED
+            return jsonify(new_practice.created_to_json()), ErrorCodes.HTTP_CREATED
 
         return jsonify({"error": error_code}), ErrorCodes.HTTP_BAD_REQUEST
 

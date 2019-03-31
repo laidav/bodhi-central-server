@@ -34,8 +34,19 @@ class Practice(db.Model):
             "application": self.application,
             "created": self.created,
             "author_id": self.author_id,
-            "subjects": [subject.subject.to_json() for subject in self.subjects],
+            "subjects": [subject.subject.id for subject in self.subjects],
             "post": self.post.to_json() if self.post is not None else None
+        }
+
+    def created_to_json(self):
+        return {
+            "id": self.id,
+            "teaching_point": self.teaching_point,
+            "application": self.application,
+            "created": self.created,
+            "author_id": self.author_id,
+            "subjects": [subject.subject.id for subject in self.subjects],
+            "post_id": self.post_id if self.post_id is not None else None
         }
 
     @staticmethod
