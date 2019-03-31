@@ -8,8 +8,8 @@ from ..exceptions import PostNotFoundError
 
 
 class BLPractice:
-    @classmethod
-    def get_practices(cls, post_id):
+    @staticmethod
+    def get_practices(post_id):
         practices = Practice.query.filter_by(author=g.current_user)
 
         if post_id:
