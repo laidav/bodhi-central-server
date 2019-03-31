@@ -23,8 +23,9 @@ class BLPractice:
 
     @staticmethod
     def add_practice(request):
+        new_practice = request.json
+
         try:
-            new_practice = request.json
             new_practice = AddPracticeSchema.validate(new_practice)
             new_practice = Practice.from_json(new_practice)
 
@@ -42,8 +43,8 @@ class BLPractice:
             error_code = ErrorCodes.ERROR_SUCCESS
         except SchemaError:
             error_code = ErrorCodes.ERROR_SCHEMA_VALIDATION
-        except PostNotFoundError:
-            error_code = ErrorCodes.POST_NOT_FOUND
+        except PostNotFoundError as e:
+            error_code = e.error
 
         if error_code == ErrorCodes.ERROR_SUCCESS:
             return jsonify(new_practice.created_to_json()), ErrorCodes.HTTP_CREATED
