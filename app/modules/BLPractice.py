@@ -5,7 +5,6 @@ from .schemas.practice_schema import AddPracticeSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
 from ..exceptions import PostNotFoundError, SubjectNotFoundError
-import json
 
 
 class BLPractice:
