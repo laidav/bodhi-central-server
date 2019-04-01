@@ -10,5 +10,5 @@ class ErrorCodes:
     ERROR_UNKNOWN = 202
 
     # Custom Errors
-    GROUP_NOT_FOUND = 400
+    SUBJECT_NOT_FOUND = 400
     POST_NOT_FOUND = 401
