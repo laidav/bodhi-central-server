@@ -9,8 +9,10 @@ from ..exceptions import PostNotFoundError, SubjectNotFoundError
 
 class BLPractice:
     @staticmethod
-    def get_practices(post_id):
+    def get_practices(request):
         practices = Practice.query.filter_by(author=g.current_user)
+
+        post_id = request.args.get("post_id")
 
         if post_id:
             practices.filter_by(post_id=post_id)
@@ -50,17 +52,17 @@ class BLPractice:
             db.session.add_all(params)
             db.session.commit()
 
-            error_code = ErrorCodes.ERROR_SUCCESS
+            result = jsonify({"error": ErrorCodes.SUCCESS}), ErrorCodes.HTTP_STATUS_CREATED
         except SchemaError:
-            error_code = ErrorCodes.ERROR_SCHEMA_VALIDATION
+            result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
+                     ErrorCodes.HTTP_STATUS_BAD_REQUEST
         except PostNotFoundError as e:
-            error_code = e.error
+            result = jsonify({"error": e.error}), \
+                     ErrorCodes.HTTP_STATUS_NOT_FOUND
         except SubjectNotFoundError as e:
-            error_code = e.error
+            result = jsonify({"error": e.error}), \
+                     ErrorCodes.HTTP_STATUS_NOT_FOUND
 
-        if error_code == ErrorCodes.ERROR_SUCCESS:
-            return jsonify(new_practice.created_to_json()), ErrorCodes.HTTP_CREATED
-
-        return jsonify({"error": error_code}), ErrorCodes.HTTP_BAD_REQUEST
+        return result
 
 

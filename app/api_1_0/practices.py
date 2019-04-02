@@ -5,12 +5,7 @@ from ..modules.BLPractice import BLPractice
 
 @api.route("/practice", methods=["GET"])
 def get_practices():
-
-    post_id = request.args.get("post_id")
-
-    practices = BLPractice.get_practices(post_id)
-
-    return practices
+    return BLPractice.get_practices(request)
 
 
 @api.route("/practice", methods=["POST"])
