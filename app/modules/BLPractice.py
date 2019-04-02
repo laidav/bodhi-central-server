@@ -25,27 +25,28 @@ class BLPractice:
 
     @staticmethod
     def add_practice(request):
-        new_practice = request.json
+        data = request.json
 
         try:
-            new_practice = AddPracticeSchema.validate(new_practice)
-            subjects = new_practice["subjects"] if new_practice["subjects"] is not None else []
-            del new_practice["subjects"]
-            new_practice = Practice.from_json(new_practice)
+            data = AddPracticeSchema.validate(data)
+            subjects = data["subjects"] if data["subjects"] is not None else []
+            post = None if data["post_id"] is None else Post.query.get(data["post_id"])
+
+            if data["post_id"] is not None and post is None:
+                raise PostNotFoundError
+
+            for subject_id in subjects:
+                if db.session.query(Subject.id).filter_by(id=subject_id).scalar() is None:
+                    raise SubjectNotFoundError
+
+            del data["subjects"]
+
+            new_practice = Practice.from_json(data)
             new_practice.author = g.current_user
 
             params = [new_practice]
 
-            post = None if new_practice.post_id is None else Post.query.get(new_practice.post_id)
-
-            if new_practice.post_id is not None and post is None:
-                raise PostNotFoundError
-
             for subject_id in subjects:
-                exists = db.session.query(Subject.id).filter_by(id=subject_id).scalar()
-                if exists is None:
-                    raise SubjectNotFoundError
-
                 params.append(PracticeSubject(practice=new_practice,
                                               subject_id=subject_id))
 
@@ -64,5 +65,3 @@ class BLPractice:
                      ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
-
-

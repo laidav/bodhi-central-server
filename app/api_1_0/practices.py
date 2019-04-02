@@ -11,3 +11,4 @@ def get_practices():
 @api.route("/practice", methods=["POST"])
 def add_practice():
     return BLPractice.add_practice(request)
+

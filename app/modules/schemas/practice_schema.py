@@ -10,3 +10,4 @@ BASE_PRACTICE_SCHEMA = {
 }
 
 AddPracticeSchema = Schema(BASE_PRACTICE_SCHEMA)
+EditPracticeSchema = Schema(BASE_PRACTICE_SCHEMA)
