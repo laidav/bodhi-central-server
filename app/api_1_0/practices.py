@@ -12,3 +12,7 @@ def get_practices():
 def add_practice():
     return BLPractice.add_practice(request)
 
+
+@api.route("/practice/<int:practice_id>", methods=["PUT"])
+def edit_practice(practice_id):
+    return BLPractice.edit_practice(request, practice_id)

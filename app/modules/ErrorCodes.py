@@ -13,3 +13,4 @@ class ErrorCodes:
     # Custom Errors
     SUBJECT_NOT_FOUND = 400
     POST_NOT_FOUND = 401
+    PRACTICE_NOT_FOUND = 402

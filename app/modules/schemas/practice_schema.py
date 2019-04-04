@@ -9,5 +9,4 @@ BASE_PRACTICE_SCHEMA = {
     Optional("post_id"): Use(int, error="Invalid Post Id.  Must be an integer.")
 }
 
-AddPracticeSchema = Schema(BASE_PRACTICE_SCHEMA)
-EditPracticeSchema = Schema(BASE_PRACTICE_SCHEMA)
+PracticeSchema = Schema(BASE_PRACTICE_SCHEMA)
