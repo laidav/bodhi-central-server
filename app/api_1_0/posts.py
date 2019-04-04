@@ -1,5 +1,5 @@
 from . import api
-from ..database import Post
+from ..db_models import Post
 from flask import jsonify
 
 

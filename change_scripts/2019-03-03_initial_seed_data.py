@@ -5,7 +5,7 @@ sys.path.append('..')
 
 from config import config
 from flask import Flask
-from app.database import User, Role, Post, Subject, PostSubject, Practice, PracticeSubject
+from app.db_models import User, Role, Post, Subject, PostSubject, Practice, PracticeSubject
 from flask_sqlalchemy import SQLAlchemy
 
 

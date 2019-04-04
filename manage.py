@@ -1,7 +1,7 @@
 import os
 
 from app import create_app, db
-from app.database import User, Role, Post, Subject, PostSubject, Practice, PracticeSubject
+from app.db_models import User, Role, Post, Subject, PostSubject, Practice, PracticeSubject
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 

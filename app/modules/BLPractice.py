@@ -1,4 +1,4 @@
-from ..database import Practice, Post, Subject, PracticeSubject
+from ..db_models import Practice, Post, Subject, PracticeSubject
 from flask import g, jsonify
 from .. import db
 from .schemas.practice_schema import PracticeSchema
@@ -82,9 +82,9 @@ class BLPractice:
 
             del data["subjects"]
 
-            new_practice = Practice.from_json(data)
+            practice.update_from_json(data)
 
-            add_params = subjects_to_add + [new_practice]
+            add_params = subjects_to_add + [practice]
 
             db.session.add_all(add_params)
 
@@ -114,6 +114,9 @@ class BLPractice:
     def __validate_data(data):
         data = PracticeSchema.validate(data)
         subjects = data["subjects"] if data["subjects"] is not None else []
+
+        data["post_id"] = data.get("post_id")
+
         post = None if data["post_id"] is None else Post.query.get(data["post_id"])
 
         if data["post_id"] is not None and post is None:
