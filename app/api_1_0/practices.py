@@ -16,3 +16,8 @@ def add_practice():
 @api.route("/practice/<int:practice_id>", methods=["PUT"])
 def edit_practice(practice_id):
     return BLPractice.edit_practice(request, practice_id)
+
+
+@api.route("/practice/<int:practice_id>", methods=["DELETE"])
+def delete_practice(practice_id):
+    return BLPractice.delete_practice(practice_id)

@@ -111,6 +111,24 @@ class BLPractice:
         return result
 
     @staticmethod
+    def delete_practice(practice_id):
+        try:
+            practice = Practice.query.get(practice_id)
+
+            if practice is None:
+                raise PracticeNotFoundError
+
+            db.session.delete(practice)
+            db.session.commit()
+
+            result = jsonify({"error": ErrorCodes.SUCCESS}), ErrorCodes.HTTP_STATUS_SUCCESS
+        except PracticeNotFoundError as e:
+            result = jsonify({"error": e.error}), \
+                 ErrorCodes.HTTP_STATUS_NOT_FOUND
+
+        return result
+
+    @staticmethod
     def __validate_data(data):
         data = PracticeSchema.validate(data)
         subjects = data["subjects"] if data["subjects"] is not None else []
