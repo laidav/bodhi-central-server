@@ -1,7 +1,7 @@
 from ..db_models import Practice, Post, Subject, PracticeSubject
 from flask import g, jsonify
 from .. import db
-from .schemas.practice_schema import PracticeSchema
+from .schemas.practice_schema import PracticeSchema, GetPracticesSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
 from ..exceptions import PostNotFoundError, SubjectNotFoundError, PracticeNotFoundError
@@ -10,18 +10,28 @@ from ..exceptions import PostNotFoundError, SubjectNotFoundError, PracticeNotFou
 class BLPractice:
     @staticmethod
     def get_practices(request):
-        practices = Practice.query.filter_by(author=g.current_user)
 
-        post_id = request.args.get("post_id")
+        try:
+            filters = GetPracticesSchema.validate(request.args.to_dict())
 
-        if post_id:
-            practices.filter_by(post_id=post_id)
+            practices = Practice.query.filter_by(author=g.current_user)
 
-        practices = practices.all()
+            post_id = filters.get("post_id")
 
-        return jsonify({
-            "practices": [practice.to_json() for practice in practices]
-        })
+            if post_id:
+                practices = practices.filter_by(post_id=post_id)
+
+            practices = practices.all()
+
+            result = jsonify({
+                "practices": [practice.to_json() for practice in practices]
+            })
+
+        except SchemaError:
+            result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
+                     ErrorCodes.HTTP_STATUS_BAD_REQUEST
+
+        return result
 
     @staticmethod
     def get_single_practice(practice_id):

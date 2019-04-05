@@ -9,4 +9,9 @@ BASE_PRACTICE_SCHEMA = {
     Optional("post_id"): Use(int, error="Invalid Post Id.  Must be an integer.")
 }
 
+GET_PRACTICES_FILTER_SCHEMA = {
+    Optional("post_id"): Or(Use(int), error="post_id must be an integer")
+}
+
 PracticeSchema = Schema(BASE_PRACTICE_SCHEMA)
+GetPracticesSchema = Schema(GET_PRACTICES_FILTER_SCHEMA)
