@@ -23,6 +23,20 @@ class BLPractice:
             "practices": [practice.to_json() for practice in practices]
         })
 
+    @staticmethod
+    def get_single_practice(practice_id):
+        try:
+            practice = Practice.query.get(practice_id)
+
+            if practice is None:
+                raise PracticeNotFoundError
+
+            result = jsonify(practice.to_json())
+        except PracticeNotFoundError as e:
+            result = jsonify({"error": e.error}), ErrorCodes.HTTP_STATUS_NOT_FOUND
+
+        return result
+
     @classmethod
     def add_practice(cls, request):
         data = request.json

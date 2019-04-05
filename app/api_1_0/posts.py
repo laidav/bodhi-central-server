@@ -1,20 +1,13 @@
 from . import api
-from ..db_models import Post
+from ..modules.BLPost import BLPost
 from flask import jsonify
 
 
 @api.route("/post")
 def get_posts():
-
-    posts = Post.query.all()
-
-    return jsonify({
-        "posts": [post.to_json() for post in posts]
-    })
+    return BLPost.get_posts()
 
 
 @api.route("/post/<int:post_id>")
 def get_post(post_id):
-    post = Post.query.get_or_404(post_id).to_json()
-
-    return jsonify(post)
+    return BLPost.get_single_post(post_id)

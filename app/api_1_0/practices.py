@@ -8,6 +8,11 @@ def get_practices():
     return BLPractice.get_practices(request)
 
 
+@api.route("/practice/<int:practice_id>", methods=["GET"])
+def get_single_practice(practice_id):
+    return BLPractice.get_single_practice(practice_id)
+
+
 @api.route("/practice", methods=["POST"])
 def add_practice():
     return BLPractice.add_practice(request)
