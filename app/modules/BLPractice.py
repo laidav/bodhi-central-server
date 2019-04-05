@@ -10,7 +10,6 @@ from ..exceptions import PostNotFoundError, SubjectNotFoundError, PracticeNotFou
 class BLPractice:
     @staticmethod
     def get_practices(request):
-
         try:
             filters = GetPracticesSchema.validate(request.args.to_dict())
 
@@ -40,6 +39,7 @@ class BLPractice:
                 raise PracticeNotFoundError
 
             result = jsonify(practice.to_json())
+
         except PracticeNotFoundError as e:
             result = jsonify({"error": e.error}), ErrorCodes.HTTP_STATUS_NOT_FOUND
 
@@ -68,6 +68,7 @@ class BLPractice:
             db.session.commit()
 
             result = jsonify(new_practice.created_to_json()), ErrorCodes.HTTP_STATUS_CREATED
+
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
                      ErrorCodes.HTTP_STATUS_BAD_REQUEST
@@ -82,9 +83,8 @@ class BLPractice:
 
     @classmethod
     def edit_practice(cls, request, practice_id):
-        data = request.json
-
         try:
+            data = request.json
             practice = Practice.query.get(practice_id)
 
             if practice is None:
@@ -117,6 +117,7 @@ class BLPractice:
             db.session.commit()
 
             result = jsonify({"error": ErrorCodes.SUCCESS}), ErrorCodes.HTTP_STATUS_SUCCESS
+
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
                      ErrorCodes.HTTP_STATUS_BAD_REQUEST
@@ -144,6 +145,7 @@ class BLPractice:
             db.session.commit()
 
             result = jsonify({"error": ErrorCodes.SUCCESS}), ErrorCodes.HTTP_STATUS_SUCCESS
+
         except PracticeNotFoundError as e:
             result = jsonify({"error": e.error}), \
                  ErrorCodes.HTTP_STATUS_NOT_FOUND
