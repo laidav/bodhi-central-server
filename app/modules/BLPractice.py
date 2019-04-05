@@ -16,10 +16,8 @@ class BLPractice:
 
             practices = Practice.query.filter_by(author=g.current_user)
 
-            post_id = filters.get("post_id")
-
-            if post_id:
-                practices = practices.filter_by(post_id=post_id)
+            for key, value in filters.items():
+                practices = practices.filter(getattr(Practice, key).like("%%%s%%" % value))
 
             practices = practices.all()
 
