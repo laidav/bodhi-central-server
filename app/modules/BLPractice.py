@@ -47,27 +47,24 @@ class BLPractice:
 
     @classmethod
     def add_practice(cls, request):
-        data = request.json
-
         try:
-            data = cls.__validate_data(data)
-            subjects = data["subjects"] if data["subjects"] is not None else []
+            data = cls.__validate_data(request.json)
+            subjects = data["subjects"]
 
             del data["subjects"]
 
-            new_practice = Practice.from_json(data)
+            new_practice = Practice(data)
             new_practice.author = g.current_user
 
             params = [new_practice]
 
             for subject_id in subjects:
-                params.append(PracticeSubject(practice=new_practice,
-                                              subject_id=subject_id))
+                params.append(PracticeSubject(practice=new_practice, subject_id=subject_id))
 
             db.session.add_all(params)
             db.session.commit()
 
-            result = jsonify(new_practice.created_to_json()), ErrorCodes.HTTP_STATUS_CREATED
+            result = jsonify(new_practice.to_json()), ErrorCodes.HTTP_STATUS_CREATED
 
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
@@ -84,13 +81,13 @@ class BLPractice:
     @classmethod
     def edit_practice(cls, request, practice_id):
         try:
-            data = request.json
             practice = Practice.query.get(practice_id)
 
             if practice is None:
                 raise PracticeNotFoundError
 
-            data = cls.__validate_data(data)
+            data = cls.__validate_data(request.json)
+
             new_subjects = data["subjects"] if data["subjects"] is not None else []
 
             current_subjects = [practice_subject.subject_id for practice_subject in PracticeSubject.query.filter_by(
@@ -155,7 +152,8 @@ class BLPractice:
     @staticmethod
     def __validate_data(data):
         data = PracticeSchema.validate(data)
-        subjects = data["subjects"] if data["subjects"] is not None else []
+
+        subjects = data["subjects"]
 
         data["post_id"] = data.get("post_id")
 

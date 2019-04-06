@@ -34,25 +34,10 @@ class Practice(db.Model):
             "post": self.post.to_json() if self.post is not None else None
         }
 
-    def created_to_json(self):
-        return {
-            "id": self.id,
-            "teaching_point": self.teaching_point,
-            "application": self.application,
-            "created": self.created,
-            "author_id": self.author_id,
-            "subjects": [subject.subject.id for subject in self.subjects],
-            "post_id": self.post_id if self.post_id is not None else None
-        }
-
-    def update_from_json(self,data):
+    def update_from_json(self, data):
         for key, value in data.items():
             setattr(self, key, value)
 
     @set_attributes_decorator
     def __init__(self, *initial_data, **kwargs):
         pass
-
-    @staticmethod
-    def from_json(json_practice):
-        return Practice(json_practice)

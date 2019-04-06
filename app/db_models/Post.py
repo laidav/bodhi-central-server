@@ -1,7 +1,7 @@
 from .. import db
 from datetime import datetime
 from .PostSubject import PostSubject
-from sqlalchemy.ext.associationproxy import association_proxy
+from ..modules.BLDecorators import set_attributes_decorator
 
 
 class Post(db.Model):
@@ -35,3 +35,7 @@ class Post(db.Model):
             "subjects": [subject.subject.to_json() for subject in self.subjects],
             "author": self.author.to_json()
         }
+
+    @set_attributes_decorator
+    def __init__(self, *initial_data, **kwargs):
+        pass
