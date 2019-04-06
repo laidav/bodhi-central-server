@@ -1,7 +1,7 @@
 from .. import db
 from datetime import datetime
 from .PracticeSubject import PracticeSubject
-from ..modules.BLDecorators import set_attributes_decorator
+from ..modules.BLDecorators import set_attributes_decorator, update_from_json_decorator
 
 
 class Practice(db.Model):
@@ -34,9 +34,9 @@ class Practice(db.Model):
             "post": self.post.to_json() if self.post is not None else None
         }
 
+    @update_from_json_decorator
     def update_from_json(self, data):
-        for key, value in data.items():
-            setattr(self, key, value)
+        pass
 
     @set_attributes_decorator
     def __init__(self, *initial_data, **kwargs):

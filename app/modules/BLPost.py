@@ -60,6 +60,72 @@ class BLPost:
 
         return result
 
+    @classmethod
+    def edit_post(cls, request, post_id):
+        try:
+            post = Post.query.get(post_id)
+
+            if post is None:
+                raise PostNotFoundError
+
+            data = cls.__validate_data(request.json)
+
+            new_subjects = data["subjects"]
+
+            current_subjects = [post_subject.subject_id for post_subject in PostSubject.query.filter_by(
+                post_id=post.id)]
+
+            subjects_to_add = [PostSubject(post_id=post_id, subject_id=subject_id)
+                               for subject_id in new_subjects if subject_id not in current_subjects]
+
+            subjects_to_delete = [subject_id for subject_id in current_subjects if subject_id not in new_subjects]
+
+            del data["subjects"]
+
+            post.update_from_json(data)
+
+            params = subjects_to_add + [post]
+
+            db.session.add_all(params)
+
+            for subject_id in subjects_to_delete:
+                PostSubject.query.filter(PostSubject.post_id == post_id,
+                                         PostSubject.subject_id == subject_id).delete()
+
+            db.session.commit()
+
+            return jsonify({"error": ErrorCodes.SUCCESS}), ErrorCodes.HTTP_STATUS_SUCCESS
+
+        except SchemaError:
+            result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
+                     ErrorCodes.HTTP_STATUS_BAD_REQUEST
+        except PostNotFoundError as e:
+            result = jsonify({"error": e.error}), ErrorCodes.HTTP_STATUS_NOT_FOUND
+        except SubjectNotFoundError as e:
+            result = jsonify({"error": e.error}), \
+                     ErrorCodes.HTTP_STATUS_NOT_FOUND
+
+        return result
+    
+    @staticmethod
+    def delete_post(post_id):
+        try:
+            post = Post.query.get(post_id)
+
+            if post is None:
+                raise PostNotFoundError
+
+            db.session.delete(post)
+            db.session.commit()
+
+            result = jsonify({"error": ErrorCodes.SUCCESS}), ErrorCodes.HTTP_STATUS_SUCCESS
+
+        except PostNotFoundError as e:
+            result = jsonify({"error": e.error}), \
+                 ErrorCodes.HTTP_STATUS_NOT_FOUND
+
+        return result
+
     @staticmethod
     def __validate_data(data):
         data = PostSchema.validate(data)

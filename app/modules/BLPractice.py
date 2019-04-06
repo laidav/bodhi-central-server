@@ -88,7 +88,7 @@ class BLPractice:
 
             data = cls.__validate_data(request.json)
 
-            new_subjects = data["subjects"] if data["subjects"] is not None else []
+            new_subjects = data["subjects"]
 
             current_subjects = [practice_subject.subject_id for practice_subject in PracticeSubject.query.filter_by(
                 practice_id=practice.id)]
@@ -103,9 +103,9 @@ class BLPractice:
 
             practice.update_from_json(data)
 
-            add_params = subjects_to_add + [practice]
+            params = subjects_to_add + [practice]
 
-            db.session.add_all(add_params)
+            db.session.add_all(params)
 
             for subject_id in subjects_to_delete:
                 PracticeSubject.query.filter(PracticeSubject.practice_id == practice_id,

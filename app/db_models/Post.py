@@ -1,7 +1,7 @@
 from .. import db
 from datetime import datetime
 from .PostSubject import PostSubject
-from ..modules.BLDecorators import set_attributes_decorator
+from ..modules.BLDecorators import set_attributes_decorator, update_from_json_decorator
 
 
 class Post(db.Model):
@@ -35,6 +35,10 @@ class Post(db.Model):
             "subjects": [subject.subject.to_json() for subject in self.subjects],
             "author": self.author.to_json()
         }
+
+    @update_from_json_decorator
+    def update_from_json(self, data):
+        pass
 
     @set_attributes_decorator
     def __init__(self, *initial_data, **kwargs):

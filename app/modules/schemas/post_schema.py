@@ -1,4 +1,4 @@
-from schema import Schema, Or, Optional, Use, And
+from schema import Schema, Or, Optional, And
 
 BASE_POST_SCHEMA = {
     "title": And(str, len, error="Invalid title"),
