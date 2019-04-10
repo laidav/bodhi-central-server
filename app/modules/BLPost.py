@@ -20,8 +20,8 @@ class BLPost:
 
             post_subjects = post_subjects.distinct(PostSubject.post_id).group_by(PostSubject.post_id).all()
 
-            result = jsonify({"posts": [post_subject.post.to_json() for post_subject in post_subjects]}), \
-                     ErrorCodes.HTTP_STATUS_SUCCESS
+            result = jsonify({"posts": [post_subject.post.to_json() for post_subject in post_subjects]}), ErrorCodes.\
+                HTTP_STATUS_SUCCESS
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
                      ErrorCodes.HTTP_STATUS_BAD_REQUEST
