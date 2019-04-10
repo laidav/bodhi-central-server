@@ -5,7 +5,7 @@ from flask import request
 
 @api.route("/post", methods=["GET"])
 def get_posts():
-    return BLPost.get_posts()
+    return BLPost.get_posts(request)
 
 
 @api.route("/post/<int:post_id>", methods=["GET"])

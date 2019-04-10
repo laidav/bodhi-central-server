@@ -1,7 +1,7 @@
 from ..db_models import Post, Subject, PostSubject
 from flask import g, jsonify
 from .. import db
-from .schemas.post_schema import PostSchema
+from .schemas.post_schema import PostSchema, PostQSPSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
 from ..exceptions import PostNotFoundError, SubjectNotFoundError
@@ -9,9 +9,22 @@ from ..exceptions import PostNotFoundError, SubjectNotFoundError
 
 class BLPost:
     @staticmethod
-    def get_posts():
-        posts = Post.query.all()
-        result = jsonify({"posts": [practice.to_json() for practice in posts]}), ErrorCodes.HTTP_STATUS_SUCCESS
+    def get_posts(request):
+        try:
+            filters = PostQSPSchema.validate(request.args.to_dict(flat=False))
+
+            post_subjects = PostSubject.query
+
+            for key, value in filters.items():
+                post_subjects = post_subjects.filter(getattr(PostSubject, key).in_(value))
+
+            post_subjects = post_subjects.distinct(PostSubject.post_id).group_by(PostSubject.post_id).all()
+
+            result = jsonify({"posts": [post_subject.post.to_json() for post_subject in post_subjects]}), \
+                     ErrorCodes.HTTP_STATUS_SUCCESS
+        except SchemaError:
+            result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
+                     ErrorCodes.HTTP_STATUS_BAD_REQUEST
 
         return result
 
