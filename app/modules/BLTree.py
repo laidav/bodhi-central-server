@@ -2,7 +2,8 @@ class BLTree:
     def __init__(self, root_node):
         self.root_node = root_node
 
-    def dfs_traversal(self, searcher):
+    @staticmethod
+    def __dfs_traversal(searcher, start_node):
         def __depth_traversal_recursive(node):
             nonlocal current_node
             current_node = node.first_child
@@ -11,7 +12,7 @@ class BLTree:
         def __check_siblings_recursive(node):
             searcher.compare(node)
             if searcher.search_done:
-                return searcher
+                return searcher.results
 
             if node is None:
                 return
@@ -23,25 +24,27 @@ class BLTree:
 
             __check_siblings_recursive(node)
 
-        current_node = self.root_node
+        current_node = start_node
 
         searcher.compare(current_node)
 
         __depth_traversal_recursive(current_node)
 
         searcher.search_done = True
-        return searcher
+        return searcher.results
+
+    def get_descendants(self, node=None):
+        searcher = DescendantSearcher()
+
+        node = self.root_node if node is None else node
+
+        return self.__dfs_traversal(searcher, node)
 
 
-class BLTreeSearcher:
-    def __init__(self, results):
-        self.results = results
-        self.search_done = False
-
-
-class DescendantSearcher(BLTreeSearcher):
+class DescendantSearcher:
     def __init__(self):
-        BLTreeSearcher.__init__(self, [])
+        self.results = []
+        self.search_done = False
 
     def compare(self, node):
         if node is not None:
