@@ -5,6 +5,7 @@ from .schemas.post_schema import PostSchema, PostQSPSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
 from ..exceptions import PostNotFoundError, SubjectNotFoundError
+from .BLTree import BLTree
 
 
 class BLPost:
@@ -13,10 +14,22 @@ class BLPost:
         try:
             filters = PostQSPSchema.validate(request.args.to_dict(flat=False))
 
+            subjects = []
+
+            if "subject_id" in filters:
+                for subject_id in filters["subject_id"]:
+                    subject = Subject.query.get(subject_id)
+
+                    if subject is not None:
+                        subjects = subjects + BLTree.get_descendants(subject) \
+                            if subject_id not in subjects else subjects
+
+            subjects = set(subjects)
+
             post_subjects = PostSubject.query
 
-            for key, value in filters.items():
-                post_subjects = post_subjects.filter(getattr(PostSubject, key).in_(value))
+            if len(subjects):
+                post_subjects = post_subjects.filter(PostSubject.subject_id.in_(subjects))
 
             post_subjects = post_subjects.distinct(PostSubject.post_id).group_by(PostSubject.post_id).all()
 
@@ -67,7 +80,7 @@ class BLPost:
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
                      ErrorCodes.HTTP_STATUS_BAD_REQUEST
-        except SubjectNotFoundError as e:
+        except SubjectNotFoundError:
             result = jsonify({"error": ErrorCodes.SUBJECT_NOT_FOUND}), \
                      ErrorCodes.HTTP_STATUS_NOT_FOUND
 

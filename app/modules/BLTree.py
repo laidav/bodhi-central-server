@@ -33,12 +33,11 @@ class BLTree:
         searcher.search_done = True
         return searcher.results
 
-    def get_descendants(self, node=None):
+    @classmethod
+    def get_descendants(cls, node):
         searcher = DescendantSearcher()
 
-        node = self.root_node if node is None else node
-
-        return self.__dfs_traversal(searcher, node)
+        return cls.__dfs_traversal(searcher, node)
 
 
 class DescendantSearcher:
@@ -48,4 +47,4 @@ class DescendantSearcher:
 
     def compare(self, node):
         if node is not None:
-            self.results.append(node)
+            self.results.append(node.id)
