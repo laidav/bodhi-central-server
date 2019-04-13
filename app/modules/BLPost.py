@@ -23,6 +23,8 @@ class BLPost:
                     if subject is not None:
                         subjects = subjects + BLTree.get_descendants(subject) \
                             if subject_id not in subjects else subjects
+                    else:
+                      subjects.append(subject_id)
 
             subjects = set(subjects)
 
