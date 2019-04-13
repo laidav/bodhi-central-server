@@ -1,7 +1,7 @@
 from .. import db
 from datetime import datetime
 from .PostSubject import PostSubject
-from ..modules.BLDecorators import set_attributes_decorator, update_from_json_decorator
+from ..modules.BCDecorators import set_attributes_decorator, update_from_json_decorator
 
 
 class Post(db.Model):

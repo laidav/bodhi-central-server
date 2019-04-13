@@ -5,10 +5,10 @@ from .schemas.post_schema import PostSchema, PostQSPSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
 from ..exceptions import PostNotFoundError, SubjectNotFoundError
-from .BLTree import BLTree
+from .BCTree import BCTree
 
 
-class BLPost:
+class BCPost:
     @staticmethod
     def get_posts(request):
         try:
@@ -21,7 +21,7 @@ class BLPost:
                     subject = Subject.query.get(subject_id)
 
                     if subject is not None:
-                        subjects = subjects + BLTree.get_descendants(subject) \
+                        subjects = subjects + BCTree.get_descendants(subject) \
                             if subject_id not in subjects else subjects
                     else:
                       subjects.append(subject_id)

@@ -7,7 +7,7 @@ from schema import SchemaError
 from ..exceptions import PostNotFoundError, SubjectNotFoundError, PracticeNotFoundError
 
 
-class BLPractice:
+class BCPractice:
     @staticmethod
     def get_practices(request):
         try:
