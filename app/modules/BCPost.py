@@ -24,7 +24,7 @@ class BCPost:
                         subjects = subjects + BCTree.get_descendants(subject) \
                             if subject_id not in subjects else subjects
                     else:
-                      subjects.append(subject_id)
+                        subjects.append(subject_id)
 
             subjects = set(subjects)
 
