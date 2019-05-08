@@ -30,7 +30,7 @@ class Practice(db.Model):
             "application": self.application,
             "created": self.created,
             "author_id": self.author_id,
-            "subjects": [subject.subject.id for subject in self.subjects],
+            "subjects": [subject.subject.to_json() for subject in self.subjects],
             "post": self.post.to_json() if self.post is not None else None
         }
 
