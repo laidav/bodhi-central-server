@@ -5,9 +5,8 @@ class BCTree:
     @staticmethod
     def __dfs_traversal(searcher, start_node):
         def __depth_traversal_recursive(node):
-            nonlocal current_node
-            current_node = node.first_child
-            __check_siblings_recursive(current_node)
+            node = node.first_child
+            __check_siblings_recursive(node)
 
         def __check_siblings_recursive(node):
             searcher.compare(node)
@@ -24,11 +23,9 @@ class BCTree:
 
             __check_siblings_recursive(node)
 
-        current_node = start_node
+        searcher.compare(start_node)
 
-        searcher.compare(current_node)
-
-        __depth_traversal_recursive(current_node)
+        __depth_traversal_recursive(start_node)
 
         searcher.search_done = True
         return searcher.results
