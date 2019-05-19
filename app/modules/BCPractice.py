@@ -21,10 +21,10 @@ class BCPractice:
 
             practices = practices.outerjoin(PracticeSubject, Practice.id == PracticeSubject.practice_id)
 
-            if "subject_id" in filters:
+            if "subject_id[]" in filters:
                 subjects = []
 
-                for subject_id in filters["subject_id"]:
+                for subject_id in filters["subject_id[]"]:
                     subject = Subject.query.get(subject_id)
 
                     if subject is not None:

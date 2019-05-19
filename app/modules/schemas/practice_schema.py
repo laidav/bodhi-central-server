@@ -13,7 +13,7 @@ GET_PRACTICES_QSP_SCHEMA = {
     Optional("post_id"): And(list,
                          Use(lambda n: int(n[0])),
                          error="subject query string parameter must be positive integers"),
-    Optional("subject_id"): And(list,
+    Optional("subject_id[]"): And(list,
                             Use(lambda n: [int(item) for item in n]),
                             error="subject query string parameter must be positive integers")
 }
