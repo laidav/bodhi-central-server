@@ -10,7 +10,12 @@ BASE_PRACTICE_SCHEMA = {
 }
 
 GET_PRACTICES_QSP_SCHEMA = {
-    Optional("post_id"): Or(Use(int), error="post_id must be an integer")
+    Optional("post_id"): And(list,
+                         Use(lambda n: int(n[0])),
+                         error="subject query string parameter must be positive integers"),
+    Optional("subject_id"): And(list,
+                            Use(lambda n: [int(item) for item in n]),
+                            error="subject query string parameter must be positive integers")
 }
 
 PracticeSchema = Schema(BASE_PRACTICE_SCHEMA)

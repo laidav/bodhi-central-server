@@ -5,20 +5,39 @@ from .schemas.practice_schema import PracticeSchema, GetPracticesSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
 from ..exceptions import PostNotFoundError, SubjectNotFoundError, PracticeNotFoundError
+from .BCTree import BCTree
 
 
 class BCPractice:
     @staticmethod
     def get_practices(request):
         try:
-            filters = GetPracticesSchema.validate(request.args.to_dict())
+            filters = GetPracticesSchema.validate(request.args.to_dict(flat=False))
 
             practices = Practice.query.filter_by(author=g.current_user)
 
-            for key, value in filters.items():
-                practices = practices.filter(getattr(Practice, key).like("%%%s%%" % value))
+            if "post_id" in filters:
+                practices = practices.filter(Practice.post_id == filters["post_id"])
 
-            practices = practices.all()
+            practices = practices.outerjoin(PracticeSubject, Practice.id == PracticeSubject.practice_id)
+
+            if "subject_id" in filters:
+                subjects = []
+
+                for subject_id in filters["subject_id"]:
+                    subject = Subject.query.get(subject_id)
+
+                    if subject is not None:
+                        subjects = subjects + BCTree.get_descendants(subject) \
+                            if subject_id not in subjects else subjects
+                    else:
+                        subjects.append(subject_id)
+
+                if len(subjects):
+                    subjects = set(subjects)
+                    practices = practices.filter(PracticeSubject.subject_id.in_(subjects))
+
+            practices = practices.distinct(PracticeSubject.practice_id).group_by(PracticeSubject.practice_id).all()
 
             result = jsonify({
                 "practices": [practice.to_json() for practice in practices]
