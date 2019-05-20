@@ -14,7 +14,7 @@ class BCPractice:
         try:
             filters = GetPracticesSchema.validate(request.args.to_dict(flat=False))
 
-            practices = Practice.query.filter_by(author=g.current_user)
+            practices = Practice.query.filter_by(author=g.current_user).order_by(db.desc(Practice.created))
 
             if "post_id" in filters:
                 practices = practices.filter(Practice.post_id == filters["post_id"])
