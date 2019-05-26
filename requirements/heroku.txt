@@ -1,4 +1,4 @@
 -r prod.txt
 Flask-SSLify==0.1.5
 gunicorn==19.9
-psycopg2==2.5.1
+psycopg2==2.8.1
