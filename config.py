@@ -34,5 +34,7 @@ class HerokuConfig(ProductionConfig):
 
 config = {
     "development": DevelopmentConfig,
-    "default": DevelopmentConfig
+    "default": DevelopmentConfig,
+    "production": ProductionConfig,
+    "heroku": HerokuConfig
 }
