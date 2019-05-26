@@ -21,7 +21,8 @@ class ProductionConfig(Config):
 
 
 class HerokuConfig(ProductionConfig):
-    def init_app(app):
+    @classmethod
+    def init_app(cls, app):
         ProductionConfig.init_app(app)
 
 
