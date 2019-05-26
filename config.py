@@ -19,7 +19,7 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     SSL_DISABLE = False
-    SQLALCHEMY_DATABASE_URI = "hello"
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 class HerokuConfig(ProductionConfig):
 
