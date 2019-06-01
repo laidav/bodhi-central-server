@@ -1,8 +1,10 @@
 from flask import Flask
+from flask_mail import Mail
 from config import config
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+mail = Mail()
 
 
 def create_app(config_name):
@@ -10,6 +12,7 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
 
     db.init_app(app)
+    mail.init_app(app)
 
     if app.config["SSL_REDIRECT"]:
         from flask_sslify import SSLify
