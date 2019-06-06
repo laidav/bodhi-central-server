@@ -31,7 +31,8 @@ class BCPost:
             post_subjects = PostSubject.query
 
             if len(subjects):
-                post_subjects = post_subjects.filter(PostSubject.subject_id.in_(subjects))
+                post_subjects = post_subjects.filter(
+                    PostSubject.subject_id.in_(subjects))
 
             post_subjects = post_subjects.distinct(PostSubject.post_id).group_by(PostSubject.post_id)\
                 .outerjoin(Post, Post.id == PostSubject.post_id).order_by(db.desc(Post.created)).all()
@@ -40,7 +41,7 @@ class BCPost:
                 HTTP_STATUS_SUCCESS
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
-                     ErrorCodes.HTTP_STATUS_BAD_REQUEST
+                ErrorCodes.HTTP_STATUS_BAD_REQUEST
 
         return result
 
@@ -55,7 +56,8 @@ class BCPost:
             result = jsonify(post.to_json()), ErrorCodes.HTTP_STATUS_SUCCESS
 
         except PostNotFoundError as e:
-            result = jsonify({"error": e.error}), ErrorCodes.HTTP_STATUS_NOT_FOUND
+            result = jsonify({"error": e.error}
+                             ), ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
 
@@ -73,19 +75,21 @@ class BCPost:
             params = [new_post]
 
             for subject_id in subjects:
-                params.append(PostSubject(post=new_post, subject_id=subject_id))
+                params.append(PostSubject(
+                    post=new_post, subject_id=subject_id))
 
             db.session.add_all(params)
             db.session.commit()
 
-            result = jsonify(new_post.to_json()), ErrorCodes.HTTP_STATUS_CREATED
+            result = jsonify(new_post.to_json()
+                             ), ErrorCodes.HTTP_STATUS_CREATED
 
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
-                     ErrorCodes.HTTP_STATUS_BAD_REQUEST
+                ErrorCodes.HTTP_STATUS_BAD_REQUEST
         except SubjectNotFoundError:
             result = jsonify({"error": ErrorCodes.SUBJECT_NOT_FOUND}), \
-                     ErrorCodes.HTTP_STATUS_NOT_FOUND
+                ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
 
@@ -107,7 +111,8 @@ class BCPost:
             subjects_to_add = [PostSubject(post_id=post_id, subject_id=subject_id)
                                for subject_id in new_subjects if subject_id not in current_subjects]
 
-            subjects_to_delete = [subject_id for subject_id in current_subjects if subject_id not in new_subjects]
+            subjects_to_delete = [
+                subject_id for subject_id in current_subjects if subject_id not in new_subjects]
 
             del data["subjects"]
 
@@ -127,15 +132,16 @@ class BCPost:
 
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
-                     ErrorCodes.HTTP_STATUS_BAD_REQUEST
+                ErrorCodes.HTTP_STATUS_BAD_REQUEST
         except PostNotFoundError as e:
-            result = jsonify({"error": e.error}), ErrorCodes.HTTP_STATUS_NOT_FOUND
+            result = jsonify({"error": e.error}
+                             ), ErrorCodes.HTTP_STATUS_NOT_FOUND
         except SubjectNotFoundError as e:
             result = jsonify({"error": e.error}), \
-                     ErrorCodes.HTTP_STATUS_NOT_FOUND
+                ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
-    
+
     @staticmethod
     def delete_post(post_id):
         try:
@@ -147,11 +153,12 @@ class BCPost:
             db.session.delete(post)
             db.session.commit()
 
-            result = jsonify({"error": ErrorCodes.SUCCESS}), ErrorCodes.HTTP_STATUS_SUCCESS
+            result = jsonify({"error": ErrorCodes.SUCCESS}
+                             ), ErrorCodes.HTTP_STATUS_SUCCESS
 
         except PostNotFoundError as e:
             result = jsonify({"error": e.error}), \
-                 ErrorCodes.HTTP_STATUS_NOT_FOUND
+                ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
 

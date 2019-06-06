@@ -12,14 +12,18 @@ class BCPractice:
     @staticmethod
     def get_practices(request):
         try:
-            filters = GetPracticesSchema.validate(request.args.to_dict(flat=False))
+            filters = GetPracticesSchema.validate(
+                request.args.to_dict(flat=False))
 
-            practices = Practice.query.filter_by(author=g.current_user).order_by(db.desc(Practice.created))
+            practices = Practice.query.filter_by(
+                author=g.current_user).order_by(db.desc(Practice.created))
 
             if "post_id" in filters:
-                practices = practices.filter(Practice.post_id == filters["post_id"])
+                practices = practices.filter(
+                    Practice.post_id == filters["post_id"])
 
-            practices = practices.outerjoin(PracticeSubject, Practice.id == PracticeSubject.practice_id)
+            practices = practices.outerjoin(
+                PracticeSubject, Practice.id == PracticeSubject.practice_id)
 
             if "subject_id[]" in filters:
                 subjects = []
@@ -35,9 +39,11 @@ class BCPractice:
 
                 if len(subjects):
                     subjects = set(subjects)
-                    practices = practices.filter(PracticeSubject.subject_id.in_(subjects))
+                    practices = practices.filter(
+                        PracticeSubject.subject_id.in_(subjects))
 
-            practices = practices.distinct(PracticeSubject.practice_id).group_by(PracticeSubject.practice_id).all()
+            practices = practices.distinct(PracticeSubject.practice_id).group_by(
+                PracticeSubject.practice_id).all()
 
             result = jsonify({
                 "practices": [practice.to_json() for practice in practices]
@@ -45,7 +51,7 @@ class BCPractice:
 
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
-                     ErrorCodes.HTTP_STATUS_BAD_REQUEST
+                ErrorCodes.HTTP_STATUS_BAD_REQUEST
 
         return result
 
@@ -60,7 +66,8 @@ class BCPractice:
             result = jsonify(practice.to_json())
 
         except PracticeNotFoundError as e:
-            result = jsonify({"error": e.error}), ErrorCodes.HTTP_STATUS_NOT_FOUND
+            result = jsonify({"error": e.error}
+                             ), ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
 
@@ -78,22 +85,24 @@ class BCPractice:
             params = [new_practice]
 
             for subject_id in subjects:
-                params.append(PracticeSubject(practice=new_practice, subject_id=subject_id))
+                params.append(PracticeSubject(
+                    practice=new_practice, subject_id=subject_id))
 
             db.session.add_all(params)
             db.session.commit()
 
-            result = jsonify(new_practice.to_json()), ErrorCodes.HTTP_STATUS_CREATED
+            result = jsonify(new_practice.to_json()
+                             ), ErrorCodes.HTTP_STATUS_CREATED
 
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
-                     ErrorCodes.HTTP_STATUS_BAD_REQUEST
+                ErrorCodes.HTTP_STATUS_BAD_REQUEST
         except PostNotFoundError as e:
             result = jsonify({"error": e.error}), \
-                     ErrorCodes.HTTP_STATUS_NOT_FOUND
+                ErrorCodes.HTTP_STATUS_NOT_FOUND
         except SubjectNotFoundError as e:
             result = jsonify({"error": e.error}), \
-                     ErrorCodes.HTTP_STATUS_NOT_FOUND
+                ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
 
@@ -116,7 +125,8 @@ class BCPractice:
                                                subject_id=subject_id)
                                for subject_id in new_subjects if subject_id not in current_subjects]
 
-            subjects_to_delete = [subject_id for subject_id in current_subjects if subject_id not in new_subjects]
+            subjects_to_delete = [
+                subject_id for subject_id in current_subjects if subject_id not in new_subjects]
 
             del data["subjects"]
 
@@ -132,20 +142,21 @@ class BCPractice:
 
             db.session.commit()
 
-            result = jsonify({"error": ErrorCodes.SUCCESS}), ErrorCodes.HTTP_STATUS_SUCCESS
+            result = jsonify({"error": ErrorCodes.SUCCESS}
+                             ), ErrorCodes.HTTP_STATUS_SUCCESS
 
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
-                     ErrorCodes.HTTP_STATUS_BAD_REQUEST
+                ErrorCodes.HTTP_STATUS_BAD_REQUEST
         except PostNotFoundError as e:
             result = jsonify({"error": e.error}), \
-                     ErrorCodes.HTTP_STATUS_NOT_FOUND
+                ErrorCodes.HTTP_STATUS_NOT_FOUND
         except SubjectNotFoundError as e:
             result = jsonify({"error": e.error}), \
-                     ErrorCodes.HTTP_STATUS_NOT_FOUND
+                ErrorCodes.HTTP_STATUS_NOT_FOUND
         except PracticeNotFoundError as e:
             result = jsonify({"error": e.error}), \
-                     ErrorCodes.HTTP_STATUS_NOT_FOUND
+                ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
 
@@ -160,11 +171,12 @@ class BCPractice:
             db.session.delete(practice)
             db.session.commit()
 
-            result = jsonify({"error": ErrorCodes.SUCCESS}), ErrorCodes.HTTP_STATUS_SUCCESS
+            result = jsonify({"error": ErrorCodes.SUCCESS}
+                             ), ErrorCodes.HTTP_STATUS_SUCCESS
 
         except PracticeNotFoundError as e:
             result = jsonify({"error": e.error}), \
-                 ErrorCodes.HTTP_STATUS_NOT_FOUND
+                ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
 
@@ -176,7 +188,8 @@ class BCPractice:
 
         data["post_id"] = data.get("post_id")
 
-        post = None if data["post_id"] is None else Post.query.get(data["post_id"])
+        post = None if data["post_id"] is None else Post.query.get(
+            data["post_id"])
 
         if data["post_id"] is not None and post is None:
             raise PostNotFoundError
