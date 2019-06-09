@@ -35,7 +35,7 @@ class BCPost:
                     PostSubject.subject_id.in_(subjects))
 
             post_subjects = post_subjects.distinct(PostSubject.post_id).order_by(PostSubject.post_id)\
-                .outerjoin(Post, Post.id == PostSubject.post_id).order_by(db.desc(Post.created)).all()
+                .join(Post, Post.id == PostSubject.post_id).order_by(db.desc(Post.created)).all()
 
             result = jsonify({"posts": [post_subject.post.to_json() for post_subject in post_subjects]}), ErrorCodes.\
                 HTTP_STATUS_SUCCESS

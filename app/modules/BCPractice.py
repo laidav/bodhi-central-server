@@ -22,7 +22,7 @@ class BCPractice:
                 practices = practices.filter(
                     Practice.post_id == filters["post_id"])
 
-            practices = practices.outerjoin(
+            practices = practices.join(
                 PracticeSubject, Practice.id == PracticeSubject.practice_id)
 
             if "subject_id[]" in filters:
@@ -42,8 +42,7 @@ class BCPractice:
                     practices = practices.filter(
                         PracticeSubject.subject_id.in_(subjects))
 
-            practices = practices.distinct(PracticeSubject.practice_id).group_by(
-                PracticeSubject.practice_id).all()
+            practices = practices.all()
 
             result = jsonify({
                 "practices": [practice.to_json() for practice in practices]
