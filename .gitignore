@@ -117,6 +117,7 @@ dmypy.json
 
 # Database
 *.sqlite
+*.sql
 
 # Workspace
 .idea/
