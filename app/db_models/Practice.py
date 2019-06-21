@@ -8,14 +8,15 @@ class Practice(db.Model):
     __tablename__ = "practices"
 
     id = db.Column(db.Integer, primary_key=True)
-    teaching_point = db.Column(db.String(250))
+    teaching_point = db.Column(db.Text)
     application = db.Column(db.Text)
     created = db.Column(db.DateTime(), default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))
 
     subjects = db.relationship("PracticeSubject",
-                               foreign_keys=[PracticeSubject.subject_id, PracticeSubject.practice_id],
+                               foreign_keys=[
+                                   PracticeSubject.subject_id, PracticeSubject.practice_id],
                                backref=db.backref("practice", lazy="joined"),
                                lazy="dynamic",
                                cascade="all, delete-orphan")

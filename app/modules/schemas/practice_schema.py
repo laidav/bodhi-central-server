@@ -1,7 +1,7 @@
 from schema import Schema, Or, Optional, Use, And
 
 BASE_PRACTICE_SCHEMA = {
-    "teaching_point": And(str, len, lambda n: len(n) < 250, error="Invalid teaching_point"),
+    "teaching_point": And(str, len, error="Invalid teaching_point"),
     "subjects": And(list,
                     lambda n: all(isinstance(item, int)
                                   and item > 0 for item in n) and n,
