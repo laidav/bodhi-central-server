@@ -15,6 +15,7 @@ class Config:
     BODHICENTRAL_MAIL_SUBJECT_PREFIX = '[BodhiCentral]'
     BODHICENTRAL_MAIL_SENDER = 'BodhiCentral Admin <laidavtest@gmail.com>'
     BODHICENTRAL_ADMIN = os.environ.get('BODHICENTRAL_ADMIN')
+    BODHICENTRAL_PRACTICES_PER_PAGE = 20
     SSL_REDIRECT = False
 
     @staticmethod

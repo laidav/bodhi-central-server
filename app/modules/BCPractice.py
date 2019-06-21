@@ -1,5 +1,5 @@
 from ..db_models import Practice, Post, Subject, PracticeSubject
-from flask import g, jsonify
+from flask import g, jsonify, current_app
 from .. import db
 from .schemas.practice_schema import PracticeSchema, GetPracticesSchema
 from .ErrorCodes import ErrorCodes
@@ -42,10 +42,17 @@ class BCPractice:
                     practices = practices.filter(
                         PracticeSubject.subject_id.in_(subjects))
 
-            practices = practices.all()
+            pagination = practices.paginate(
+                filters.get("page", 1),
+                per_page=current_app.config["BODHICENTRAL_PRACTICES_PER_PAGE"],
+                error_out=False
+            )
+
+            practices = pagination.items
 
             result = jsonify({
-                "practices": [practice.to_json() for practice in practices]
+                "practices": [practice.to_json() for practice in practices],
+                "total_count": pagination.total
             })
 
         except SchemaError:
