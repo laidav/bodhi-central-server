@@ -15,19 +15,17 @@ class BCPractice:
             filters = GetPracticesSchema.validate(
                 request.args.to_dict(flat=False))
 
-            subjects = []
+            subjects = set()
 
             if "subject_id[]" in filters:
                 for subject_id in filters["subject_id[]"]:
                     subject = Subject.query.get(subject_id)
 
                     if subject is not None:
-                        subjects = subjects + BCTree.get_descendants(subject) \
+                        subjects = subjects | set(BCTree.get_descendants(subject)) \
                             if subject_id not in subjects else subjects
                     else:
-                        subjects.append(subject_id)
-
-            subjects = set(subjects)
+                        subjects = subjects | subject_id
 
             practice_subjects = PracticeSubject.query
 
