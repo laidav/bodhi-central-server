@@ -16,6 +16,7 @@ class BCPractice:
                 request.args.to_dict(flat=False))
 
             subjects = set()
+            practice_subjects = []
 
             if "subject_id[]" in filters:
                 for subject_id in filters["subject_id[]"]:
@@ -23,40 +24,44 @@ class BCPractice:
 
                     if subject is not None:
                         subjects = subjects | set(BCTree.get_descendants(subject)) \
-                            if subject_id not in subjects else subjects
+                            if subject_id not in subjects else set()
                     else:
                         subjects = subjects | subject_id
 
-            practice_subjects = PracticeSubject.query
-
             if len(subjects):
-                practice_subjects = practice_subjects.filter(
-                    PracticeSubject.subject_id.in_(subjects))
+                practice_subjects = PracticeSubject.query.filter(PracticeSubject.subject_id.in_(subjects)).order_by(
+                    PracticeSubject.practice_id).with_entities(PracticeSubject.practice_id).all()
 
-            practice_subjects = practice_subjects.distinct(PracticeSubject.practice_id).order_by(PracticeSubject.practice_id).join(
-                Practice, Practice.id == PracticeSubject.practice_id).filter_by(
+            practice_subjects_ids = [practice_subject[0]
+                                     for practice_subject in practice_subjects]
+
+            practices = Practice.query.filter_by(
                 author=g.current_user).order_by(db.desc(Practice.created))
 
+            if len(practice_subjects_ids):
+                practices = practices.filter(
+                    Practice.id.in_(practice_subjects_ids))
+
             if "post_id" in filters:
-                practice_subjects = practice_subjects.filter(
+                practices = practices.filter(
                     Practice.post_id == filters["post_id"])
 
-            pagination = practice_subjects.paginate(
+            pagination = practices.paginate(
                 filters.get("page", 1),
                 per_page=current_app.config["BODHICENTRAL_PRACTICES_PER_PAGE"],
                 error_out=False
             )
 
-            practice_subjects = pagination.items
+            practices = pagination.items
 
             result = jsonify({
-                "practices": [practice_subject.practice.to_json() for practice_subject in practice_subjects],
+                "practices": [practice.to_json() for practice in practices],
                 "total_count": pagination.total
             })
 
         except SchemaError:
-            result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
-                ErrorCodes.HTTP_STATUS_BAD_REQUEST
+            result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}),
+            ErrorCodes.HTTP_STATUS_BAD_REQUEST
 
         return result
 
@@ -100,14 +105,14 @@ class BCPractice:
                              ), ErrorCodes.HTTP_STATUS_CREATED
 
         except SchemaError:
-            result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
-                ErrorCodes.HTTP_STATUS_BAD_REQUEST
+            result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}),
+            ErrorCodes.HTTP_STATUS_BAD_REQUEST
         except PostNotFoundError as e:
-            result = jsonify({"error": e.error}), \
-                ErrorCodes.HTTP_STATUS_NOT_FOUND
+            result = jsonify({"error": e.error}),
+            ErrorCodes.HTTP_STATUS_NOT_FOUND
         except SubjectNotFoundError as e:
-            result = jsonify({"error": e.error}), \
-                ErrorCodes.HTTP_STATUS_NOT_FOUND
+            result = jsonify({"error": e.error}),
+            ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
 
@@ -151,17 +156,17 @@ class BCPractice:
                              ), ErrorCodes.HTTP_STATUS_SUCCESS
 
         except SchemaError:
-            result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
-                ErrorCodes.HTTP_STATUS_BAD_REQUEST
+            result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}),
+            ErrorCodes.HTTP_STATUS_BAD_REQUEST
         except PostNotFoundError as e:
-            result = jsonify({"error": e.error}), \
-                ErrorCodes.HTTP_STATUS_NOT_FOUND
+            result = jsonify({"error": e.error}),
+            ErrorCodes.HTTP_STATUS_NOT_FOUND
         except SubjectNotFoundError as e:
-            result = jsonify({"error": e.error}), \
-                ErrorCodes.HTTP_STATUS_NOT_FOUND
+            result = jsonify({"error": e.error}),
+            ErrorCodes.HTTP_STATUS_NOT_FOUND
         except PracticeNotFoundError as e:
-            result = jsonify({"error": e.error}), \
-                ErrorCodes.HTTP_STATUS_NOT_FOUND
+            result = jsonify({"error": e.error}),
+            ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
 
@@ -180,8 +185,8 @@ class BCPractice:
                              ), ErrorCodes.HTTP_STATUS_SUCCESS
 
         except PracticeNotFoundError as e:
-            result = jsonify({"error": e.error}), \
-                ErrorCodes.HTTP_STATUS_NOT_FOUND
+            result = jsonify({"error": e.error}),
+            ErrorCodes.HTTP_STATUS_NOT_FOUND
 
         return result
 
