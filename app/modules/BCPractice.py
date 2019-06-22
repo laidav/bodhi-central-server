@@ -15,19 +15,9 @@ class BCPractice:
             filters = GetPracticesSchema.validate(
                 request.args.to_dict(flat=False))
 
-            practices = Practice.query.filter_by(
-                author=g.current_user).order_by(db.desc(Practice.created))
-
-            if "post_id" in filters:
-                practices = practices.filter(
-                    Practice.post_id == filters["post_id"])
-
-            practices = practices.join(
-                PracticeSubject, Practice.id == PracticeSubject.practice_id)
+            subjects = []
 
             if "subject_id[]" in filters:
-                subjects = []
-
                 for subject_id in filters["subject_id[]"]:
                     subject = Subject.query.get(subject_id)
 
@@ -37,21 +27,32 @@ class BCPractice:
                     else:
                         subjects.append(subject_id)
 
-                if len(subjects):
-                    subjects = set(subjects)
-                    practices = practices.filter(
-                        PracticeSubject.subject_id.in_(subjects))
+            subjects = set(subjects)
 
-            pagination = practices.paginate(
+            practice_subjects = PracticeSubject.query
+
+            if len(subjects):
+                practice_subjects = practice_subjects.filter(
+                    PracticeSubject.subject_id.in_(subjects))
+
+            practice_subjects = practice_subjects.distinct(PracticeSubject.practice_id).order_by(PracticeSubject.practice_id).join(
+                Practice, Practice.id == PracticeSubject.practice_id).filter_by(
+                author=g.current_user).order_by(db.desc(Practice.created))
+
+            if "post_id" in filters:
+                practice_subjects = practice_subjects.filter(
+                    Practice.post_id == filters["post_id"])
+
+            pagination = practice_subjects.paginate(
                 filters.get("page", 1),
                 per_page=current_app.config["BODHICENTRAL_PRACTICES_PER_PAGE"],
                 error_out=False
             )
 
-            practices = pagination.items
+            practice_subjects = pagination.items
 
             result = jsonify({
-                "practices": [practice.to_json() for practice in practices],
+                "practices": [practice_subject.practice.to_json() for practice_subject in practice_subjects],
                 "total_count": pagination.total
             })
 
