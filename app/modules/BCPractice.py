@@ -56,7 +56,8 @@ class BCPractice:
 
             result = jsonify({
                 "practices": [practice.to_json() for practice in practices],
-                "total_count": pagination.total
+                "total_count": pagination.total,
+                "has_next": pagination.has_next
             })
 
         except SchemaError:
