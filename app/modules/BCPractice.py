@@ -17,6 +17,12 @@ class BCPractice:
 
             subjects = set()
             practice_subjects = []
+            practices = Practice.query.filter_by(
+                author=g.current_user).order_by(db.desc(Practice.created))
+
+            if "post_id" in filters:
+                practices = practices.filter(
+                    Practice.post_id == filters["post_id"])
 
             if "subject_id[]" in filters:
                 for subject_id in filters["subject_id[]"]:
@@ -28,23 +34,15 @@ class BCPractice:
                     else:
                         subjects = subjects | subject_id
 
-            if len(subjects):
-                practice_subjects = PracticeSubject.query.filter(PracticeSubject.subject_id.in_(subjects)).order_by(
-                    PracticeSubject.practice_id).with_entities(PracticeSubject.practice_id).all()
+                if len(subjects):
+                    practice_subjects = PracticeSubject.query.filter(PracticeSubject.subject_id.in_(subjects)).order_by(
+                        PracticeSubject.practice_id).with_entities(PracticeSubject.practice_id).all()
 
-            practice_subjects_ids = [practice_subject[0]
-                                     for practice_subject in practice_subjects]
+                    practice_subject_practice_ids = [practice_subject[0]
+                                                     for practice_subject in practice_subjects]
 
-            practices = Practice.query.filter_by(
-                author=g.current_user).order_by(db.desc(Practice.created))
-
-            if len(practice_subjects_ids):
-                practices = practices.filter(
-                    Practice.id.in_(practice_subjects_ids))
-
-            if "post_id" in filters:
-                practices = practices.filter(
-                    Practice.post_id == filters["post_id"])
+                    practices = practices.filter(
+                        Practice.id.in_(practice_subject_practice_ids))
 
             pagination = practices.paginate(
                 filters.get("page", 1),
