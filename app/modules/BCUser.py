@@ -5,6 +5,7 @@ from .schemas.auth_schema import AddUserSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
 from ..exceptions import UsernameAlreadyExistsError, EmailAlreadyExistsError, ConfirmPasswordError
+from ..email import send_email
 
 
 class BCUser:
@@ -16,6 +17,9 @@ class BCUser:
 
             db.session.add(new_user)
             db.session.commit()
+            token = new_user.generate_confirmation_token()
+            send_email(new_user.email, "Confirm your account",
+                       "auth/email/confirm", user=new_user, token=token)
 
             result = jsonify(new_user.to_json())
         except SchemaError as e:
