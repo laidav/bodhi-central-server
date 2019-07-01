@@ -1,7 +1,9 @@
-from . import api
-from flask import jsonify
+# from . import api
+# from . import api
+# from ..modules.BCUser import BCUser
+# from flask import request
 
 
-@api.route("/users")
-def get_users():
-    return jsonify({"users": "users!"})
+# @api.route("/users", methods=["POST"])
+# def add_user():
+#     return BCUser.add_user(request)

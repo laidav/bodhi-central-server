@@ -1,8 +1,9 @@
-from flask import g, jsonify
+from flask import g, jsonify, request
 from flask_httpauth import HTTPBasicAuth
 from .errors import unauthorized, forbidden
 from ..db_models.User import User
 from . import api
+from ..modules.BCUser import BCUser
 
 auth = HTTPBasicAuth()
 
@@ -26,7 +27,6 @@ def auth_error():
     return unauthorized("Invalid Credentials")
 
 
-@api.before_request
 @auth.login_required
 def before_request():
     if not g.current_user.confirmed:
@@ -34,6 +34,7 @@ def before_request():
 
 
 @api.route("/token")
+@auth.login_required
 def get_token():
     if g.token_used:
         return unauthorized("Invalid credentials")
@@ -41,6 +42,11 @@ def get_token():
 
 
 @api.route("/verify-token")
+@auth.login_required
 def verify_token():
     return jsonify({"error": 200})
 
+
+@api.route("/sign-up", methods=["POST"])
+def add_user():
+    return BCUser.add_user(request)
