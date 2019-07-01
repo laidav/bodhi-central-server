@@ -13,7 +13,8 @@ class BCUser:
         try:
             data = cls.__validate_data(request.json)
             result = jsonify({"hi": "hi"})
-        except SchemaError:
+        except SchemaError as e:
+            print(e)
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
                 ErrorCodes.HTTP_STATUS_BAD_REQUEST
         except UsernameAlreadyExistsError as e:
@@ -27,7 +28,7 @@ class BCUser:
 
     @classmethod
     def __validate_data(cls, data):
-        # data = AddUserSchema.validate(data)
+        data = AddUserSchema.validate(data)
         cls.__check_existing_username(data["username"])
         cls.__check_existing_email(data["email"])
 
