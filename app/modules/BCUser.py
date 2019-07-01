@@ -1,20 +1,42 @@
 from ..db_models import User
 from flask import jsonify
 from .. import db
-# from .schemas.post_schema import PostSchema, PostQSPSchema
+from .schemas.auth_schema import AddUserSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
-# from ..exceptions import PostNotFoundError, SubjectNotFoundError
+from ..exceptions import UsernameAlreadyExistsError, EmailAlreadyExistsError
 
 
 class BCUser:
-    @staticmethod
-    def add_user(request):
-        print(request.json)
+    @classmethod
+    def add_user(cls, request):
         try:
+            data = cls.__validate_data(request.json)
             result = jsonify({"hi": "hi"})
         except SchemaError:
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
                 ErrorCodes.HTTP_STATUS_BAD_REQUEST
+        except UsernameAlreadyExistsError as e:
+            result = jsonify({"error": e.error}
+                             ), ErrorCodes.HTTP_STATUS_BAD_REQUEST
+        except EmailAlreadyExistsError as e:
+            result = jsonify({"error": e.error}
+                             ), ErrorCodes.HTTP_STATUS_BAD_REQUEST
 
         return result
+
+    @classmethod
+    def __validate_data(cls, data):
+        # data = AddUserSchema.validate(data)
+        cls.__check_existing_username(data["username"])
+        cls.__check_existing_email(data["email"])
+
+    @staticmethod
+    def __check_existing_username(username):
+        if User.query.filter_by(username=username).first():
+            raise UsernameAlreadyExistsError
+
+    @staticmethod
+    def __check_existing_email(email):
+        if User.query.filter_by(email=email).first():
+            raise EmailAlreadyExistsError

@@ -14,6 +14,17 @@ class SubjectNotFoundError(Exception):
     def __init__(self):
         self.error = ErrorCodes.SUBJECT_NOT_FOUND
 
+
 class PracticeNotFoundError(Exception):
     def __init__(self):
         self.error = ErrorCodes.PRACTICE_NOT_FOUND
+
+
+class UsernameAlreadyExistsError(Exception):
+    def __init__(self):
+        self.error = ErrorCodes.USERNAME_ALREADY_EXISTS
+
+
+class EmailAlreadyExistsError(Exception):
+    def __init__(self):
+        self.error = ErrorCodes.EMAIL_ALREADY_EXISTS
