@@ -50,3 +50,8 @@ def verify_token():
 @api.route("/sign-up", methods=["POST"])
 def add_user():
     return BCUser.add_user(request)
+
+
+@api.route("/confirm/<token>")
+def confirm(token):
+    return BCUser.confirm_user(token)

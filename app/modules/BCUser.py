@@ -1,10 +1,11 @@
 from ..db_models import User
-from flask import jsonify
+from flask import jsonify, g, redirect, current_app
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from .. import db
 from .schemas.auth_schema import AddUserSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
-from ..exceptions import UsernameAlreadyExistsError, EmailAlreadyExistsError, ConfirmPasswordError
+from ..exceptions import UsernameAlreadyExistsError, EmailAlreadyExistsError, ConfirmPasswordError, UserNotFoundError
 from ..email import send_email
 
 
@@ -34,6 +35,31 @@ class BCUser:
         except ConfirmPasswordError as e:
             result = jsonify({"error": e.error}
                              ), ErrorCodes.HTTP_STATUS_BAD_REQUEST
+
+        return result
+
+    @staticmethod
+    def confirm_user(token):
+        s = Serializer(current_app.config["SECRET_KEY"])
+        try:
+            data = s.loads(token)
+            user = User.query.get(data.get("confirm"))
+
+            if user is None:
+                result = redirect("https://ca.nba.com/?gr=www")
+                raise UserNotFoundError
+
+            user.confirmed = True
+
+            db.session.add(user)
+            db.session.commit()
+
+            result = redirect("https://bodhi-central-client.herokuapp.com")
+        except UserNotFoundError as e:
+            result = jsonify({"error": e.error}
+                             ), ErrorCodes.HTTP_STATUS_BAD_REQUEST
+        except:
+            result = redirect("https://ca.nba.com/?gr=www")
 
         return result
 

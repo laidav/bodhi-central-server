@@ -33,3 +33,8 @@ class EmailAlreadyExistsError(Exception):
 class ConfirmPasswordError(Exception):
     def __init__(self):
         self.error = ErrorCodes.CONFIRM_PASSWORD
+
+
+class UserNotFoundError(Exception):
+    def __init__(self):
+        self.error = ErrorCodes.USER_NOT_FOUND
