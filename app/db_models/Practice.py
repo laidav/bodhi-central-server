@@ -21,6 +21,10 @@ class Practice(db.Model):
                                lazy="dynamic",
                                cascade="all, delete-orphan")
 
+    @set_attributes_decorator
+    def __init__(self, *initial_data, **kwargs):
+        pass
+
     def __repr__(self):
         return "<Practice %r>" % self.teaching_point
 
@@ -37,8 +41,4 @@ class Practice(db.Model):
 
     @update_from_json_decorator
     def update_from_json(self, data):
-        pass
-
-    @set_attributes_decorator
-    def __init__(self, *initial_data, **kwargs):
         pass

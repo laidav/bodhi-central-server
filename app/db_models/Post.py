@@ -15,12 +15,17 @@ class Post(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     subjects = db.relationship("PostSubject",
-                               foreign_keys=[PostSubject.subject_id, PostSubject.post_id],
+                               foreign_keys=[
+                                   PostSubject.subject_id, PostSubject.post_id],
                                backref=db.backref("post", lazy="joined"),
                                lazy="dynamic",
                                cascade="all, delete-orphan")
 
     practices = db.relationship("Practice", backref="post")
+
+    @set_attributes_decorator
+    def __init__(self, *initial_data, **kwargs):
+        pass
 
     def __repr__(self):
         return "<Post %r>" % self.title
@@ -38,8 +43,4 @@ class Post(db.Model):
 
     @update_from_json_decorator
     def update_from_json(self, data):
-        pass
-
-    @set_attributes_decorator
-    def __init__(self, *initial_data, **kwargs):
         pass

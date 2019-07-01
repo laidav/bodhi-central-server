@@ -4,7 +4,7 @@ from .. import db
 from .schemas.auth_schema import AddUserSchema
 from .ErrorCodes import ErrorCodes
 from schema import SchemaError
-from ..exceptions import UsernameAlreadyExistsError, EmailAlreadyExistsError
+from ..exceptions import UsernameAlreadyExistsError, EmailAlreadyExistsError, ConfirmPasswordError
 
 
 class BCUser:
@@ -12,9 +12,13 @@ class BCUser:
     def add_user(cls, request):
         try:
             data = cls.__validate_data(request.json)
-            result = jsonify({"hi": "hi"})
+            new_user = User(data)
+
+            db.session.add(new_user)
+            db.session.commit()
+
+            result = jsonify(new_user.to_json())
         except SchemaError as e:
-            print(e)
             result = jsonify({"error": ErrorCodes.SCHEMA_VALIDATION}), \
                 ErrorCodes.HTTP_STATUS_BAD_REQUEST
         except UsernameAlreadyExistsError as e:
@@ -23,14 +27,23 @@ class BCUser:
         except EmailAlreadyExistsError as e:
             result = jsonify({"error": e.error}
                              ), ErrorCodes.HTTP_STATUS_BAD_REQUEST
+        except ConfirmPasswordError as e:
+            result = jsonify({"error": e.error}
+                             ), ErrorCodes.HTTP_STATUS_BAD_REQUEST
 
         return result
 
     @classmethod
     def __validate_data(cls, data):
         data = AddUserSchema.validate(data)
+
+        if data["password"] != data["password2"]:
+            raise ConfirmPasswordError
+
         cls.__check_existing_username(data["username"])
         cls.__check_existing_email(data["email"])
+
+        return data
 
     @staticmethod
     def __check_existing_username(username):

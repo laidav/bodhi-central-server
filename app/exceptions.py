@@ -28,3 +28,8 @@ class UsernameAlreadyExistsError(Exception):
 class EmailAlreadyExistsError(Exception):
     def __init__(self):
         self.error = ErrorCodes.EMAIL_ALREADY_EXISTS
+
+
+class ConfirmPasswordError(Exception):
+    def __init__(self):
+        self.error = ErrorCodes.CONFIRM_PASSWORD

@@ -3,6 +3,8 @@ from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from app.exceptions import ValidationError
+from ..modules.Constants import Constants
+from ..modules.BCDecorators import set_attributes_decorator, update_from_json_decorator
 
 
 class User(db.Model):
@@ -11,11 +13,16 @@ class User(db.Model):
     username = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(64), unique=True, index=True)
     confirmed = db.Column(db.Boolean, default=False)
-    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+    role_id = db.Column(db.Integer, db.ForeignKey(
+        "roles.id"), default=Constants.USER_ROLE)
     password_hash = db.Column(db.String(128))
 
     posts = db.relationship("Post", backref="author")
     practices = db.relationship("Practice", backref="author")
+
+    @set_attributes_decorator
+    def __init__(self, *initial_data, **kwargs):
+        pass
 
     def __repr__(self):
         return "<User %r>" % self.username
