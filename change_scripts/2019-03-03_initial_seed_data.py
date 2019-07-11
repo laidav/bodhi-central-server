@@ -1,12 +1,11 @@
+from flask_sqlalchemy import SQLAlchemy
+from app.db_models import User, Role, Post, Subject, PostSubject, Practice, PracticeSubject
+from flask import Flask
+from config import config
 import os
 import sys
 
 sys.path.append('..')
-
-from config import config
-from flask import Flask
-from app.db_models import User, Role, Post, Subject, PostSubject, Practice, PracticeSubject
-from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
@@ -91,12 +90,16 @@ if __name__ == "__main__":
                                           "all about holding and letting go, just like the breath",
                               author=user_david,
                               post=post_2)
-        
-        practice_subject_a = PracticeSubject(practice=practice, subject=right_view)
-        practice_subject_b = PracticeSubject(practice=practice, subject=meditation)
 
-        practice_2_subject_a = PracticeSubject(practice=practice_2, subject=right_view)
-        practice_2_subject_b = PracticeSubject(practice=practice_2, subject=meditation)
+        practice_subject_a = PracticeSubject(
+            practice=practice, subject=right_view)
+        practice_subject_b = PracticeSubject(
+            practice=practice, subject=meditation)
+
+        practice_2_subject_a = PracticeSubject(
+            practice=practice_2, subject=right_view)
+        practice_2_subject_b = PracticeSubject(
+            practice=practice_2, subject=meditation)
 
         db.session.add_all([admin_role, mod_role, user_role, user_david, buddha, wisdom,
                             ethics, meditation, right_view, right_intention, right_speech,
